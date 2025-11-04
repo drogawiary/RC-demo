@@ -85,17 +85,21 @@ header.book + .topbar { gap: 8px; }
 <div class="wrap">
   <header class="book">Różaniec</header>
 <div class="topbar">
-  <div class="row" style="justify-content:center">
+  <!-- linia 1: tryb, wycentrowany -->
+  <div class="topbar-line topbar-info">
     <span class="pill" id="modeInfo">Tryb: dzień tygodnia</span>
   </div>
-  <div class="row" style="gap:8px;justify-content:space-between;flex-wrap:wrap">
-    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+
+  <!-- linia 2: dziś + przycisk po lewej, przełącznik po prawej -->
+  <div class="topbar-line topbar-actions">
+    <div class="left">
       <span class="pill" id="todayBadge">Dziś: —</span>
       <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
     </div>
     <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
   </div>
 </div>
+
 
 
   <!-- Start -->
