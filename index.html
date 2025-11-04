@@ -34,6 +34,8 @@ header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
 .hide{display:none!important}
 footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 .hint{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;text-align:center}
+.progress{height:10px;background:var(--panel-2);border:1px solid var(--ring);border-radius:999px;overflow:hidden;margin:10px 0 8px}
+.progress>div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
 </style>
 </head>
 <body>
@@ -63,6 +65,7 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 
   <!-- Czytanie -->
   <div id="readPanel" class="panel hide" role="region" aria-live="polite" aria-label="Treść rozważań">
+    <div class="progress"><div id="bar"></div></div>
     <div class="content">
       <h3 id="stepTitle">Tytuł</h3>
       <div id="stepBody" class="muted"></div>
@@ -143,6 +146,7 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
   const readPanel=qs('#readPanel');
   const stepTitle=qs('#stepTitle');
   const stepBody=qs('#stepBody');
+  const bar=qs('#bar');
   const prevBtn=qs('#prevBtn');
   const nextBtn=qs('#nextBtn');
   const finishBtn=qs('#finishBtn');
@@ -186,6 +190,7 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
     // zapis postępu
     saveStep(currentPart, step);
 
+    if(bar){ const pct = Math.round((step/(totalSteps()-1))*100); bar.style.width = pct + '%'; }
     nextBtn.classList.toggle('hide', step===max-1);
     finishBtn.classList.toggle('hide', step!==max-1);
   }
