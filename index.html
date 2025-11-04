@@ -226,7 +226,11 @@ header.book + .topbar { gap: 8px; }
   function keyPart(p){ return S.step+p }
   function keyDone(p){ return S.done+p }
   function setActiveChip(p){ qsa(".chip").forEach(c=>{ c.classList.toggle("active", c.dataset.part===p); c.classList.toggle("suggest", c.dataset.part===todays().part); }); }
-  function renderToday(){ const t=todays(); todayBadge.textContent=`Dziś: ${t.label} — ${PART_NAME[t.part]}`; setActiveChip(currentPart||t.part); }
+function renderToday(){ 
+  const t = todays(); 
+  todayBadge.textContent = `Dziś: ${t.label}`; 
+  setActiveChip(currentPart || t.part); 
+}
   function showStart(){ startPanel.classList.remove("hide"); readPanel.classList.add("hide") }
   function showRead(){ readPanel.classList.remove("hide"); startPanel.classList.add("hide") }
   function save(){
