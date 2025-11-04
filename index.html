@@ -84,16 +84,19 @@ header.book + .topbar { gap: 8px; }
 <body>
 <div class="wrap">
   <header class="book">Różaniec</header>
-  <div class="topbar">
-    <div class="row" style="gap:6px;align-items:center;flex-wrap:wrap">
+<div class="topbar">
+  <div class="row" style="justify-content:center">
+    <span class="pill" id="modeInfo">Tryb: dzień tygodnia</span>
+  </div>
+  <div class="row" style="gap:8px;justify-content:space-between;flex-wrap:wrap">
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
       <span class="pill" id="todayBadge">Dziś: —</span>
       <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
     </div>
-    <div class="row" style="gap:6px;align-items:center">
-      <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
-      <span class="pill" id="modeInfo">Tryb: dzień / noc</span>
-    </div>
+    <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
   </div>
+</div>
+
 
   <!-- Start -->
 <div id="startPanel" class="panel" role="region" aria-label="Wybór części różańca">
