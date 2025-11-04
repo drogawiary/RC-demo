@@ -93,7 +93,23 @@ header.book + .topbar { gap: 8px; }
   border-top: 1px solid var(--ring);
   padding-top: 6px;
 }
-  
+
+/* 🌹 Wzmocniony tytuł z delikatnym maryjnym blaskiem */
+header.book {
+  background: linear-gradient(180deg, #cce5ff, #dce8ff);
+  color: #001244;
+  text-align: center;
+  padding: 28px 20px;
+  border-radius: 20px 20px 0 0;
+  font-size: clamp(26px, 5vw, 36px);
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-shadow:
+    0 0 8px rgba(120,170,255,0.6),
+    0 0 16px rgba(180,210,255,0.4),
+    0 0 24px rgba(200,230,255,0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 </style>
 </head>
 <body>
