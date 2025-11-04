@@ -333,9 +333,11 @@ function renderToday(){
   qs('#themeBtn')?.addEventListener('click',()=>{ const isDark=document.documentElement.classList.contains('dark'); applyTheme(isDark? 'light':'dark'); });
 
   resetIfNewDay();
-  autoToday.checked = true; localStorage.setItem(S.auto,"1");
-  if(modeInfo) modeInfo.textContent = autoToday.checked? "Tryb: dzień tygodnia" : "Tryb: standard";
-  const last=localStorage.getItem(S.lastPart);
+autoToday.checked = true; 
+localStorage.setItem(S.auto,"1");
+// if(modeInfo) modeInfo.textContent = autoToday.checked? "Tryb: dzień tygodnia" : "Tryb: standard";
+const last=localStorage.getItem(S.lastPart);
+
   currentPart = PARTS.includes(last)? last : (autoToday.checked? todays().part : "radosne");
   renderToday();
   scheduleMidnightReset();
