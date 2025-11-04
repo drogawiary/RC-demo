@@ -79,24 +79,37 @@ header.book + .topbar { gap: 8px; }
   #applyToday { padding: 6px 8px; }
   #todayBadge { margin-bottom: 4px; }
 }
+.topbar { padding: 10px 14px; }
+.topbar-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.topbar-actions {
+  justify-content: center;
+  border-top: 1px solid var(--ring);
+  padding-top: 6px;
+}
+  
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="book">Różaniec</header>
 <div class="topbar">
-  <!-- linia 1: tryb, wycentrowany -->
+  <!-- Linia 1: tryb + ikona -->
   <div class="topbar-line topbar-info">
+    <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
     <span class="pill" id="modeInfo">Tryb: dzień tygodnia</span>
   </div>
 
-  <!-- linia 2: dziś + przycisk po lewej, przełącznik po prawej -->
+  <!-- Linia 2: dzień + przycisk -->
   <div class="topbar-line topbar-actions">
-    <div class="left">
-      <span class="pill" id="todayBadge">Dziś: —</span>
-      <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
-    </div>
-    <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
+    <span class="pill" id="todayBadge">Dziś: —</span>
+    <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
   </div>
 </div>
 
