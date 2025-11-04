@@ -11,10 +11,12 @@
 <meta name="theme-color" content="#0e1633" media="(prefers-color-scheme: dark)">
 
 <style>
+/* --- Reset i bezpieczne ustawienia --- */
 *{box-sizing:border-box; -webkit-text-size-adjust:100%;}
 html,body{margin:0;padding:0}
 body{font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, sans-serif; color:var(--text); background:var(--bg); background-image:linear-gradient(180deg, var(--bg), rgba(255,255,255,0));}
 
+/* --- Maryjny schemat kolorów (DZIEŃ / NOC sterowane klasą .dark) --- */
 :root{
   --bg:#dce8ff; --panel:#f6f9ff; --panel-2:#e4edff; --text:#0e1533; --muted:#5a6aa0; --accent:#2450ff; --accent-2:#6ea8ff; --ring:#2450ff22; --soft:#edf3ff;
 }
@@ -22,26 +24,35 @@ body{font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica,
   --bg:#0e1633; --panel:#161f3f; --panel-2:#1d2754; --text:#e8edff; --muted:#a7baf0; --accent:#5c82ff; --accent-2:#7faaff; --ring:#6ea8ff33; --soft:#202c5a;
 }
 
+/* --- Layout --- */
 .wrap{max-width:900px;margin:0 auto;padding:16px; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border-radius:20px; box-shadow:0 0 20px #0003}
 
+/* 🔵 Baner tytułu Różaniec */
 header.book{background:#cce5ff;color:#000033;text-align:center;padding:20px;border-radius:20px 20px 0 0;font-size:clamp(22px,4vw,30px);font-weight:800;box-shadow:0 2px 8px #0002}
-header.book + .topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:8px}
+header.book + .topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px}
 
-.topbar{background:linear-gradient(180deg,#dbe8ff 0%,#f3f6ff 100%);border-radius:14px;padding:8px 16px;box-shadow:0 2px 6px #2450ff22}
+/* Topbar i przyciski */
+.topbar{background:linear-gradient(180deg,#dbe8ff 0%,#f3f6ff 100%);border-radius:14px;padding:12px 16px;box-shadow:0 2px 6px #2450ff22}
 .dark .topbar{background:linear-gradient(180deg,#1a1f3a 0%, #0f1221 100%); box-shadow:0 0 10px #4f7fff33}
 #themeBtn{border:1px solid var(--ring);background:var(--panel);border-radius:12px;padding:8px 14px;cursor:pointer;font-weight:700}
-.pill{background:var(--soft);border:1px solid var(--ring);color:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px;white-space:nowrap}
-.btnlink{border:1px solid var(--ring);background:var(--panel);padding:6px 10px;border-radius:10px;cursor:pointer;font-weight:700;white-space:nowrap}
+.pill{background:var(--soft);border:1px solid var(--ring);color:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px}
+.btnlink{border:1px solid var(--ring);background:var(--panel);padding:6px 10px;border-radius:10px;cursor:pointer;font-weight:700}
 
+/* Tytuł z delikatnym blaskiem */
+.title{width:100%;text-align:center;display:block;margin:0 auto 10px auto;font-weight:800;font-size:clamp(22px,4vw,30px);color:var(--text);text-shadow:0 0 6px rgba(100,150,255,.5), 0 0 12px rgba(150,200,255,.3)}
+
+/* Karty/sekcje */
 .panel{margin-top:12px;background:var(--panel);border:1px solid var(--ring);border-radius:14px;padding:14px}
 .muted{color:var(--muted)}
 .hr{height:1px;background:var(--ring);margin:8px 0}
 
+/* Chipy wyboru części */
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{background:var(--panel-2);border:1px solid var(--ring);border-radius:10px;padding:8px 10px;cursor:pointer;font-weight:700}
 .chip.active{outline:2px solid var(--accent-2);background:var(--soft)}
 .chip.suggest{box-shadow:0 0 0 3px var(--ring), 0 0 0 6px #52a0ff33}
 
+/* Indykatory, progress i treść */
 .indicators{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .indicator{background:var(--panel-2);border:1px solid var(--ring);border-radius:10px;padding:8px 12px;font-weight:700}
 .progress{height:10px;background:var(--panel-2);border:1px solid var(--ring);border-radius:999px;overflow:hidden}
@@ -51,114 +62,58 @@ header.book + .topbar{display:flex;justify-content:space-between;align-items:cen
 .prayer{margin-top:10px;padding:10px;border-left:4px solid var(--accent);background:var(--soft);border-radius:8px}
 .hint{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;text-align:center}
 
+/* Układ przycisków */
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .space{flex:1}
 .bigbtn{font-size:16px;font-weight:800;letter-spacing:.2px;background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:10px 14px;cursor:pointer}
 .bigbtn.primary{background:var(--accent);color:#fff;border-color:transparent}
 .bigbtn:disabled{opacity:.6;cursor:not-allowed}
 
+/* Poprawiona widoczność w trybie nocnym */
 .dark .btnlink, .dark .bigbtn{color:#fff!important;border-color:#6ea8ff!important;background:#1a1f3a!important}
 .dark #applyToday{background:#1e2450!important;color:#fff!important;box-shadow:0 0 0 3px #3a55ff33, 0 0 12px #4f7fff66;border-color:#6ea8ff!important}
 .dark #opisBtn{background:#1e2450!important;color:#fff!important;border-color:#6ea8ff!important;box-shadow:0 0 8px #4f7fff55}
 
 .hide{display:none!important}
 footer{margin:14px 0 6px;color:var(--muted);text-align:center}
-/* Topbar – delikatne wyrównanie i kompakt */
-header.book + .topbar { gap: 8px; }
-.topbar { padding: 10px 14px; }
-.topbar .row:first-child { flex: 1; }
-.topbar .pill, .topbar .btnlink { line-height: 1; }
-
-/* Panel start – czytelne odstępy */
-#startPanel .hr { margin: 10px 0 14px; }
-#startPanel .chips .chip { font-size: 16px; }
-
-/* Na wąskich ekranach – zawijanie bez ścisku */
-@media (max-width: 520px){
-  .topbar { padding: 8px 10px; }
-  #applyToday { padding: 6px 8px; }
-  #todayBadge { margin-bottom: 4px; }
-}
-.topbar { padding: 10px 14px; }
-.topbar-line {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 6px;
-}
-.topbar-actions {
-  justify-content: center;
-  border-top: 1px solid var(--ring);
-  padding-top: 6px;
-}
-
-/* 🌹 Wzmocniony tytuł z delikatnym maryjnym blaskiem */
-header.book {
-  background: linear-gradient(180deg, #cce5ff, #dce8ff);
-  color: #001244;
-  text-align: center;
-  padding: 28px 20px;
-  border-radius: 20px 20px 0 0;
-  font-size: clamp(26px, 5vw, 36px);
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  text-shadow:
-    0 0 8px rgba(120,170,255,0.6),
-    0 0 16px rgba(180,210,255,0.4),
-    0 0 24px rgba(200,230,255,0.25);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-
-  
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="book">Różaniec</header>
-
-<div class="topbar">
-  <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
-  <span class="pill" id="modeInfo">Tryb: dzień tygodnia</span>
-  <span class="pill" id="todayBadge">Dziś: —</span>
-  <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
-</div>
-
-
-
-  <!-- Linia 2: dzień + przycisk -->
-  <div class="topbar-line topbar-actions">
-    <span class="pill" id="todayBadge">Dziś: —</span>
-    <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+  <header class="book">Różaniec</header>
+  <div class="topbar">
+    <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
+    <span class="pill" id="modeInfo">Tryb: dzień / noc</span>
   </div>
-</div>
-
-
 
   <!-- Start -->
-<div id="startPanel" class="panel" role="region" aria-label="Wybór części różańca">
-  <input id="autoToday" type="checkbox" checked style="display:none" aria-hidden="true" />
-  <div class="row" style="margin-top:6px">
-    <div class="chips" id="chips" role="tablist" aria-label="Części różańca">
-      <div class="chip" data-part="radosne" role="tab" tabindex="0">Tajemnice radosne (pon/sob)</div>
-      <div class="chip" data-part="bolesne" role="tab" tabindex="0">Tajemnice bolesne (wt/pt)</div>
-      <div class="chip" data-part="swiatla" role="tab" tabindex="0">Tajemnice światła (czw)</div>
-      <div class="chip" data-part="chwalebne" role="tab" tabindex="0">Tajemnice chwalebne (śr/nd)</div>
+  <div id="startPanel" class="panel" role="region" aria-label="Wybór części różańca">
+    <div class="row">
+      <span class="muted">Wybierz część różańca albo użyj „dzisiejszej”.</span>
+    </div>
+    <div class="hr" aria-hidden="true"></div>
+    <div class="row">
+      <input id="autoToday" type="checkbox" checked style="display:none" aria-hidden="true" />
+      <span class="space"></span>
+      <span class="pill" id="todayBadge">Dziś: —</span>
+      <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <div class="chips" id="chips" role="tablist" aria-label="Części różańca">
+        <div class="chip" data-part="radosne" role="tab" tabindex="0">Tajemnice radosne (pon/sob)</div>
+        <div class="chip" data-part="bolesne" role="tab" tabindex="0">Tajemnice bolesne (wt/pt)</div>
+        <div class="chip" data-part="swiatla" role="tab" tabindex="0">Tajemnice światła (czw)</div>
+        <div class="chip" data-part="chwalebne" role="tab" tabindex="0">Tajemnice chwalebne (śr/nd)</div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="opisBtn" class="bigbtn" type="button">Opis</button>
+      <span class="space"></span>
+      <button id="startBtn" class="bigbtn primary" type="button">Start</button>
     </div>
   </div>
 
-  <div class="hr" aria-hidden="true"></div>
-
-  <div class="row" style="margin-top:6px">
-    <button id="opisBtn" class="bigbtn" type="button">Opis</button>
-    <span class="space"></span>
-    <button id="startBtn" class="bigbtn primary" type="button">Start</button>
-  </div>
-</div>
-
-<!-- Czytanie -->
+  <!-- Czytanie -->
   <div id="readPanel" class="panel hide" role="region" aria-live="polite" aria-label="Treść rozważań">
     <div class="indicators">
       <div class="indicator" id="indPart">Część —</div>
@@ -268,11 +223,7 @@ header.book {
   function keyPart(p){ return S.step+p }
   function keyDone(p){ return S.done+p }
   function setActiveChip(p){ qsa(".chip").forEach(c=>{ c.classList.toggle("active", c.dataset.part===p); c.classList.toggle("suggest", c.dataset.part===todays().part); }); }
-function renderToday(){ 
-  const t = todays(); 
-  todayBadge.textContent = `Dziś: ${t.label}`; 
-  setActiveChip(currentPart || t.part); 
-}
+  function renderToday(){ const t=todays(); todayBadge.textContent=`Dziś: ${t.label} — ${PART_NAME[t.part]}`; setActiveChip(currentPart||t.part); }
   function showStart(){ startPanel.classList.remove("hide"); readPanel.classList.add("hide") }
   function showRead(){ readPanel.classList.remove("hide"); startPanel.classList.add("hide") }
   function save(){
@@ -336,14 +287,12 @@ function renderToday(){
 
   function applyTheme(mode){ const root=document.documentElement; if(mode==='dark'){ root.classList.add('dark'); } else { root.classList.remove('dark'); } localStorage.setItem(S.theme, mode); }
   const savedTheme = localStorage.getItem(S.theme); if(savedTheme){ applyTheme(savedTheme); }
-  qs('#themeBtn')?.addEventListener('click',()=>{ const isDark=document.documentElement.classList.contains('dark'); applyTheme(isDark? 'light':'dark'); });
+  themeBtn?.addEventListener('click',()=>{ const isDark=document.documentElement.classList.contains('dark'); applyTheme(isDark? 'light':'dark'); });
 
   resetIfNewDay();
-autoToday.checked = true; 
-localStorage.setItem(S.auto,"1");
-// if(modeInfo) modeInfo.textContent = autoToday.checked? "Tryb: dzień tygodnia" : "Tryb: standard";
-const last=localStorage.getItem(S.lastPart);
-
+  autoToday.checked = true; localStorage.setItem(S.auto,"1");
+  if(modeInfo) modeInfo.textContent = autoToday.checked? "Tryb: dzień tygodnia" : "Tryb: standard";
+  const last=localStorage.getItem(S.lastPart);
   currentPart = PARTS.includes(last)? last : (autoToday.checked? todays().part : "radosne");
   renderToday();
   scheduleMidnightReset();
