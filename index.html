@@ -110,17 +110,33 @@ header.book {
     0 0 24px rgba(200,230,255,0.25);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+/* 🔹 Zwarta górna belka — tylko dwa przyciski obok siebie */
+.topbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(180deg, #dbe8ff 0%, #f3f6ff 100%);
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 6px #2450ff22;
+}
+.dark .topbar {
+  background: linear-gradient(180deg, #1a1f3a 0%, #0f1221 100%);
+  box-shadow: 0 0 10px #4f7fff33;
+}
+
+  
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="book">Różaniec</header>
 <div class="topbar">
-  <!-- Linia 1: tryb + ikona -->
-  <div class="topbar-line topbar-info">
-    <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
-    <span class="pill" id="modeInfo">Tryb: dzień/noc</span>
-  </div>
+  <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
+  <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+</div>
+
 
   <!-- Linia 2: dzień + przycisk -->
   <div class="topbar-line topbar-actions">
