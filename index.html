@@ -187,36 +187,49 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
     if(introMode){
       const t=todays();
       stepTitle.textContent='Wprowadzenie';
-      stepBody.innerHTML=`<p>Maryja powtarzała to we wszystkich miejscach swoich objawień:
-<strong>„Odmawiajcie codziennie różaniec.”</strong></p>
+stepBody.innerHTML = `
+  <p><strong>Dlaczego bywa tak ciężko?</strong> Wielu świętych mówiło, że właśnie dlatego różaniec bywa trudny:
+  bo diabeł wie, jak wielką moc ma ta modlitwa. Wie, że jedno „Zdrowaś” może ocalić duszę, że różaniec w rękach dziecka
+  jest groźniejszy dla piekła niż największa armia. Dlatego odciąga nas rozproszeniem, znużeniem, myślą, że to „nudne”
+  albo „niepotrzebne”.</p>
 
-<p><em>Jak powiedziała s. Fernanda z Fatimy:</em><br>
-<strong>„Różaniec jest jak mleko dla dziecka – pierwszy pokarm dla duszy.
-Gdy zaczynasz go pić, zaczynasz rosnąć duchowo,
-a Maryja bierze cię za rękę i prowadzi do Jezusa.”</strong></p>
+  <p>Gdy trudno ci <em>zacząć</em>, pomyśl o tych słowach „Zdrowaś Maryjo”:
+  o <strong>Aniele Gabrielu</strong>, który zwiastuje cud;
+  o <strong>Elżbiecie</strong>, która rozpoznaje przychodzącego Pana;
+  o <strong>Maryi</strong>, która słucha, wierzy i niesie Jezusa.
+  Każde „Zdrowaś” łączy się z twoją prośbą i <strong>niesie ją do Jezusa</strong> — to naprawdę dzieje się w tej modlitwie.</p>
 
-<p>Różaniec to nauka całej Ewangelii. W każdej tajemnicy rozważamy życie Jezusa i Maryi — od Zwiastowania po Zmartwychwstanie.
-Wypowiadając „Zdrowaś Maryjo”, stajemy się uczestnikami tamtego spotkania:
-z Aniołem zwiastującym cud, z Maryją, która słucha i wierzy, z Elżbietą rozpoznającą swego Pana,
-a przede wszystkim — z Jezusem, który przychodzi cicho, ale naprawdę.</p>
+  <p>Maryja powtarzała to we wszystkich miejscach swoich objawień:
+  <strong>„Odmawiajcie codziennie różaniec.”</strong></p>
 
-<p>Z modlitwy Kościoła, z objawień i świadectw świętych wyłania się cicha obietnica:
-<strong>wytrwały różaniec przynosi wielkie łaski.</strong></p>
+  <p><em>Jak powiedziała s. Fernanda z Fatimy:</em><br>
+  <strong>„Różaniec jest jak mleko dla dziecka – pierwszy pokarm dla duszy.
+  Gdy zaczynasz go pić, zaczynasz rosnąć duchowo,
+  a Maryja bierze cię za rękę i prowadzi do Jezusa.”</strong></p>
 
-<ul>
-  <li>Szczególna opieka w życiu i przy śmierci.</li>
-  <li>Nawrócenie największych grzeszników — nawet najtwardsze serce może się skruszyć.</li>
-  <li>Ochrona przed złem — każde „Zdrowaś Maryjo” to cios w szatana i tarcza dla duszy.</li>
-  <li>Pokój w rodzinach.</li>
-  <li>Uzdrowienia duszy i ciała — świadectwa z Lourdes, Fatimy, Gietrzwałdu.</li>
-  <li>Wysłuchanie próśb zgodnie z wolą Bożą.</li>
-  <li>Pomoc w trudnościach — „Odmawiajcie różaniec, a otrzymacie łaski potrzebne w życiu.”</li>
-  <li>Przygotowanie na trudne czasy — kto trzyma się różańca, nie zginie.</li>
-</ul>
+  <p>Różaniec to nauka całej Ewangelii. W każdej tajemnicy rozważamy życie Jezusa i Maryi — od Zwiastowania po Zmartwychwstanie.
+  Wypowiadając „Zdrowaś Maryjo”, stajemy się uczestnikami tamtego spotkania:
+  z Aniołem zwiastującym cud, z Maryją, która słucha i wierzy, z Elżbietą rozpoznającą swego Pana,
+  a przede wszystkim — z Jezusem, który przychodzi cicho, ale naprawdę.</p>
 
-<p>Maryja w objawieniach — <strong>Fatima, Lourdes, La Salette, Gietrzwałd</strong> — zawsze prosiła:
-<strong>„Módlcie się na różańcu.”</strong> To prośba Matki, która wie, że ta modlitwa potrafi odmienić świat — i los jednego serca.
-</p>`;
+  <p>Z modlitwy Kościoła, z objawień i świadectw świętych wyłania się cicha obietnica:
+  <strong>wytrwały różaniec przynosi wielkie łaski.</strong></p>
+
+  <ul>
+    <li>Szczególna opieka w życiu i przy śmierci.</li>
+    <li>Nawrócenie największych grzeszników — nawet najtwardsze serce może się skruszyć.</li>
+    <li>Ochrona przed złem — każde „Zdrowaś Maryjo” to cios w szatana i tarcza dla duszy.</li>
+    <li>Pokój w rodzinach.</li>
+    <li>Uzdrowienia duszy i ciała — świadectwa z Lourdes, Fatimy, <strong>Gietrzwałdu</strong>.</li>
+    <li>Wysłuchanie próśb zgodnie z wolą Bożą.</li>
+    <li>Pomoc w trudnościach — „Odmawiajcie różaniec, a otrzymacie łaski potrzebne w życiu.”</li>
+    <li>Przygotowanie na trudne czasy — kto trzyma się różańca, nie zginie.</li>
+  </ul>
+
+  <p>Maryja w objawieniach — <strong>Fatima, Lourdes, La Salette, Gietrzwałd</strong> — zawsze prosiła:
+  <strong>„Módlcie się na różańcu.”</strong> To prośba Matki, która wie, że ta modlitwa potrafi odmienić świat — i los jednego serca.</p>
+`;
+
       nextBtn.classList.add('hide');
       finishBtn.classList.add('hide');
       if(bar) bar.style.width='0%';
