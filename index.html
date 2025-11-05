@@ -29,13 +29,22 @@ header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
 .chip.active{outline:2px solid var(--accent-2);background:var(--soft)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .space{flex:1}
-.bigbtn{font-size:16px;font-weight:800;letter-spacing:.2px;background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:10px 14px;cursor:pointer;color:var(--text)}
+.bigbtn{font-size:16px;font-weight:800;letter-spacing:.2px;background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:10px 14px;cursor:pointer;color:var(--text);transition:box-shadow .25s, transform .15s}
+.bigbtn.active{box-shadow:0 0 0 3px #4f7fff33,0 0 18px 2px var(--accent-2);transform:scale(1.02)}
 .bigbtn.primary{background:var(--accent);color:#fff;border-color:transparent}
 .hide{display:none!important}
 footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 .hint{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;text-align:center}
+
+/* Progress */
 .progress{height:10px;background:var(--panel-2);border:1px solid var(--ring);border-radius:999px;overflow:hidden;margin:10px 0 8px}
 .progress>div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
+
+/* Dark-mode kontrast */
+.dark .btnlink,.dark .bigbtn{color:#e8edff!important;background:#1a1f3a!important;border-color:#6ea8ff!important}
+.dark .chip{color:#e8edff;background:#1d2754;border-color:#6ea8ff33}
+.dark .chip.active{background:#202c5a;outline:2px solid var(--accent-2)}
+.dark #themeBtn{color:#e8edff}
 </style>
 </head>
 <body>
@@ -57,7 +66,8 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
       </div>
     </div>
     <div class="row" style="margin-top:10px">
-      <button id="opisBtn" class="bigbtn" type="button">Opis</button>
+      <button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
+      <button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
       <span class="space"></span>
       <button id="startBtn" class="bigbtn primary" type="button">Start</button>
     </div>
@@ -66,8 +76,8 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
   <!-- Czytanie -->
   <div id="readPanel" class="panel hide" role="region" aria-live="polite" aria-label="Treść rozważań">
     <div class="progress"><div id="bar"></div></div>
-    <div class="content">
-      <h3 id="stepTitle">Tytuł</h3>
+    <div class="content" style="background:var(--panel-2);border:1px solid var(--ring);border-radius:14px;padding:14px;min-height:210px">
+      <h3 id="stepTitle" style="margin:0 0 6px;font-size:18px">Tytuł</h3>
       <div id="stepBody" class="muted"></div>
     </div>
     <div class="row" style="margin-top:10px">
@@ -82,13 +92,13 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 
 <script>
 (function(){
-  // ===== 1) Mapy i narzędzia =====
+  // ===== Mapy i stałe =====
   const DAY_TO_PART={0:"chwalebne",1:"radosne",2:"bolesne",3:"chwalebne",4:"swiatla",5:"bolesne",6:"radosne"};
   const PART_NAME={radosne:"Tajemnice Radosne",bolesne:"Tajemnice Bolesne",swiatla:"Tajemnice Światła",chwalebne:"Tajemnice Chwalebne"};
   const PARTS=["radosne","bolesne","swiatla","chwalebne"];
-
   const S={ step:"rozaniec:step:", done:"rozaniec:done:", lastDate:"rozaniec:lastDate", lastPart:"rozaniec:lastPart", theme:"rozaniec:theme" };
 
+  // ===== Narzędzia czasu/pamięci =====
   function warsawDate(){ return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); }
   function todays(){ const label=new Intl.DateTimeFormat('pl-PL',{weekday:'long',timeZone:'Europe/Warsaw'}).format(new Date()); const m={"niedziela":0,"poniedziałek":1,"wtorek":2,"środa":3,"czwartek":4,"piątek":5,"sobota":6}; const d=m[label]??0; return {label,dow:d,part:DAY_TO_PART[d]}; }
   function keyStep(p){return S.step+p}
@@ -101,7 +111,7 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
   function resetIfNewDay(){ const today=warsawDate(); const last=localStorage.getItem(S.lastDate); if(last && last!==today){ PARTS.forEach(p=>{ localStorage.removeItem(keyStep(p)); localStorage.removeItem(keyDone(p)); }); } localStorage.setItem(S.lastDate,today); }
   function scheduleMidnightReset(){ const now=new Date(); const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now); const y=+parts.find(p=>p.type==='year').value, m=+parts.find(p=>p.type==='month').value, d=+parts.find(p=>p.type==='day').value; const next=new Date(Date.UTC(y,m-1,d+1,0,0,0)); const ms=next-now; setTimeout(()=>{ resetIfNewDay(); }, Math.max(1000, ms)); }
 
-  // ===== 2) Treści =====
+  // ===== Treści =====
   const WSTEP_HTML=`<p><strong>✝️ Znak krzyża</strong><br/>W imię Ojca i Syna, i Ducha Świętego. Amen.</p><p><strong>Ojcze nasz</strong></p><p><strong>3× Zdrowaś Maryjo</strong> (o wiarę, nadzieję i miłość)</p><p><strong>Wierzę w Boga</strong> (Skład Apostolski)</p>`;
   const HINT='<span class="hint">Odmów: Ojcze nasz • 10× Zdrowaś Maryjo</span>';
   const CONTENT={
@@ -135,11 +145,12 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
     ],outro:{title:"Ukończyłeś dzisiaj tę część różańca",body:"Możesz wrócić i wybrać inną część."}}
   };
 
-  // ===== 3) Elementy UI =====
+  // ===== Elementy UI =====
   const qs=s=>document.querySelector(s);
   const chips=qs('#chips');
   const applyToday=qs('#applyToday');
-  const opisBtn=qs('#opisBtn');
+  const introBtn=qs('#introBtn');
+  const endBtn=qs('#endBtn');
   const startBtn=qs('#startBtn');
   const themeBtn=qs('#themeBtn');
   const startPanel=qs('#startPanel');
@@ -151,27 +162,37 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
   const nextBtn=qs('#nextBtn');
   const finishBtn=qs('#finishBtn');
 
-  // ===== 4) Stan =====
+  // ===== Stan =====
   let currentPart=null; // nazwa części
   let step=0;           // indeks kroku 0..6
-  let introMode=false;  // tryb Opis
+  let introMode=false;  // tryb Wprowadzenie
+  let endMode=false;    // tryb Dziękczynienie
 
-  // ===== 5) Dzienna pamięć =====
+  // ===== Dzienna pamięć =====
   resetIfNewDay();
   scheduleMidnightReset();
 
-  // ===== 6) Render =====
+  // ===== Render =====
   function totalSteps(){return 7}
-  function showStart(){startPanel.classList.remove('hide');readPanel.classList.add('hide');}
+  function showStart(){startPanel.classList.remove('hide');readPanel.classList.add('hide');introBtn.classList.remove('active');endBtn.classList.remove('active');}
   function showRead(){readPanel.classList.remove('hide');startPanel.classList.add('hide')}
 
   function renderStep(){
     if(introMode){
       const t=todays();
-      stepTitle.textContent='Opis';
-      stepBody.innerHTML=`<p>Różaniec to modlitwa rozważania życia Jezusa z Maryją. Zacznij od modlitw wstępnych, potem przejdź przez pięć tajemnic wybranej części. Dziś (wg Warszawy): <strong>${t.label}</strong> — sugerowana część: <strong>${PART_NAME[t.part]}</strong>.</p>`;
+      stepTitle.textContent='Wprowadzenie';
+      stepBody.innerHTML=`<p>Rozpocznij modlitwę z Maryją. Przygotuj serce, by wejść w rozważanie tajemnic różańca. Dziś (wg Warszawy): <strong>${t.label}</strong> — sugerowana część: <strong>${PART_NAME[t.part]}</strong>.</p>`;
       nextBtn.classList.add('hide');
       finishBtn.classList.add('hide');
+      if(bar) bar.style.width='0%';
+      return;
+    }
+    if(endMode){
+      stepTitle.textContent='Dziękczynienie';
+      stepBody.innerHTML=`<p>Dziękuję, że przeszedłeś tę część różańca. Maryja prowadzi dalej — wróć jutro z sercem pełnym pokoju.</p>`;
+      nextBtn.classList.add('hide');
+      finishBtn.classList.add('hide');
+      if(bar) bar.style.width='100%';
       return;
     }
 
@@ -187,109 +208,52 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
     stepTitle.textContent=title;
     stepBody.innerHTML=`<p style="margin:0;line-height:1.6">${body}</p>`;
 
-    // zapis postępu
+    // zapis postępu + pasek
     saveStep(currentPart, step);
+    if(bar){ const pct=Math.round((step/(max-1))*100); bar.style.width=pct+'%'; }
 
-    if(bar){ const pct = Math.round((step/(totalSteps()-1))*100); bar.style.width = pct + '%'; }
     nextBtn.classList.toggle('hide', step===max-1);
     finishBtn.classList.toggle('hide', step!==max-1);
   }
 
-  // ===== 7) Zdarzenia =====
-  chips.addEventListener('click',e=>{
-    const c=e.target.closest('.chip'); if(!c) return;
-    currentPart=c.dataset.part; rememberPart(currentPart);
-    step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-    setActiveChip();
-  });
-  chips.addEventListener('keydown',e=>{
-    if(e.key==='Enter'||e.key===' '){
-      const c=e.target.closest('.chip'); if(!c) return;
-      currentPart=c.dataset.part; rememberPart(currentPart);
-      step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-      setActiveChip();
-      e.preventDefault();
-    }
-  });
+  // ===== Zdarzenia =====
+  function setActiveChip(){ document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active', x.dataset.part===currentPart)); }
 
-  applyToday.addEventListener('click',()=>{
-    const t=todays();
-    currentPart=t.part; rememberPart(currentPart);
-    step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-    setActiveChip();
-  });
+  chips.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); });
+  chips.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); e.preventDefault(); }});
 
-  opisBtn.addEventListener('click',()=>{
-    introMode=true;
-    showRead();
-    renderStep();
-  });
+  applyToday.addEventListener('click',()=>{ const t=todays(); currentPart=t.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); });
+
+  introBtn.addEventListener('click',()=>{ introMode=true; endMode=false; introBtn.classList.add('active'); endBtn.classList.remove('active'); showRead(); renderStep(); });
+  endBtn.addEventListener('click',()=>{ endMode=true; introMode=false; endBtn.classList.add('active'); introBtn.classList.remove('active'); showRead(); renderStep(); });
 
   startBtn.addEventListener('click',()=>{
-    introMode=false;
-    // preferuj ostatnio używaną część, jeśli brak wyboru
-    if(!currentPart){
-      const last = localStorage.getItem(S.lastPart);
-      if(last && PARTS.includes(last)){
-        currentPart=last;
-      } else {
-        const t=todays();
-        currentPart=t.part;
-      }
-    }
+    introMode=false; endMode=false; introBtn.classList.remove('active'); endBtn.classList.remove('active');
+    if(!currentPart){ const last=localStorage.getItem(S.lastPart); if(last && PARTS.includes(last)) currentPart=last; else currentPart=todays().part; }
     step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
     rememberPart(currentPart);
     showRead();
     renderStep();
   });
 
-  prevBtn.addEventListener('click',()=>{
-    if(introMode){ introMode=false; showStart(); return; }
-    if(step===0){ showStart(); return; }
-    step=Math.max(0,step-1); renderStep();
-  });
+  prevBtn.addEventListener('click',()=>{ if(introMode||endMode){ introMode=false; endMode=false; showStart(); return; } if(step===0){ showStart(); return; } step=Math.max(0,step-1); renderStep(); });
+  nextBtn.addEventListener('click',()=>{ step=Math.min(totalSteps()-1,step+1); renderStep(); });
+  finishBtn.addEventListener('click',()=>{ setDone(currentPart,true); step=totalSteps()-1; saveStep(currentPart, step); rememberPart(currentPart); showStart(); setActiveChip(); });
 
-  nextBtn.addEventListener('click',()=>{
-    step=Math.min(totalSteps()-1,step+1); renderStep();
-  });
+  themeBtn.addEventListener('click',()=>{ const root=document.documentElement; const isDark=root.classList.toggle('dark'); localStorage.setItem(S.theme, isDark? 'dark' : 'light'); });
 
-  finishBtn.addEventListener('click',()=>{
-    // Ukończone dziś → zapisz i wróć do startu
-    setDone(currentPart,true);
-    step=totalSteps()-1; saveStep(currentPart, step);
-    rememberPart(currentPart);
-    showStart();
-    setActiveChip();
-  });
-
-  themeBtn.addEventListener('click',()=>{
-    const root=document.documentElement; const isDark=root.classList.toggle('dark');
-    localStorage.setItem(S.theme, isDark? 'dark' : 'light');
-  });
-
-  function setActiveChip(){
-    document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active', x.dataset.part===currentPart));
-  }
-
-  // ===== 8) Inicjalizacja =====
+  // ===== Inicjalizacja =====
   const savedTheme=localStorage.getItem(S.theme); if(savedTheme==='dark'){ document.documentElement.classList.add('dark'); }
   const last=localStorage.getItem(S.lastPart);
   currentPart = PARTS.includes(last)? last : todays().part;
   step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
   setActiveChip();
 
-  // ===== 9) Proste testy (konsola) =====
+  // ===== Mini testy w konsoli =====
   try{
-    console.assert(typeof CONTENT.radosne.intro.body === 'string', 'Intro radosne musi istnieć');
-    console.assert(totalSteps()===7, 'totalSteps powinno być 7');
-    // symulacja: ustaw done i sprawdź, że start wejdzie w 7/7
-    const pTest='bolesne';
-    localStorage.setItem(S.lastPart,pTest);
-    localStorage.setItem(S.done+pTest,'1');
-    const sSaved=savedStep(pTest); // może 0
-    console.assert(isDone(pTest)===true, 'Done flag powinien być true dla bolesne');
-    // nie wywołujemy clicków — tylko sprawdzamy, że funkcje się nie wywalają
-  }catch(e){ console.warn('Testy konsolowe ostrzegły:',e); }
+    console.assert(typeof CONTENT.radosne.intro.body==='string','Intro radosne istnieje');
+    console.assert(totalSteps()===7,'totalSteps==7');
+  }catch(e){ console.warn('Test ostrzegawczy:', e); }
 })();
 </script>
 </body>
