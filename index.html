@@ -36,31 +36,18 @@ header.book {
   opacity:0;
 }
 
-/* efekt wjazdu */
-@keyframes titleIn {
-  0% {
-    opacity:0;
-    transform:translateY(-25px) scale(0.95);
-  }
-  100% {
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-/* efekt pulsującego światła */
 @keyframes glowPulse {
   0%, 100% {
     text-shadow:
-      0 0 8px #ffffff,
-      0 0 18px #b3d4ff,
-      0 0 28px #5fa8ff;
+      0 0 4px #e0e6ff,
+      0 0 10px #aab8ff,
+      0 0 18px #5f7fff;
   }
   50% {
     text-shadow:
-      0 0 16px #ffffff,
-      0 0 32px #cfe8ff,
-      0 0 60px #8fc8ff;
+      0 0 8px #f0f4ff,
+      0 0 22px #c6d2ff,
+      0 0 38px #7faaff;
   }
 }
 
