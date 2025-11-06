@@ -36,19 +36,34 @@ header.book {
   opacity:0;
 }
 
+/* efekt pulsującego światła */
 @keyframes glowPulse {
   0%, 100% {
     text-shadow:
-      0 0 4px #e0e6ff,
-      0 0 10px #aab8ff,
-      0 0 18px #5f7fff;
+      0 0 6px #ffffff,
+      0 0 14px #bcd4ff,
+      0 0 24px #5f7fff;
   }
   50% {
     text-shadow:
-      0 0 8px #f0f4ff,
-      0 0 22px #c6d2ff,
-      0 0 38px #7faaff;
+      0 0 10px #ffffff,
+      0 0 26px #a8c8ff,
+      0 0 44px #7faaff;
   }
+}
+
+/* i dodaj to do stylu tytułu */
+header.book {
+  background:#0e4ba8; /* Twój niebieski */
+  color:#ffffff;
+  text-align:center;
+  padding:20px;
+  border-radius:20px 20px 0 0;
+  font-size:clamp(22px,4vw,34px);
+  font-weight:900;
+  box-shadow:0 2px 8px #0003;
+  text-shadow:0 0 6px #bcd4ff;
+  animation:titleIn 1s ease-out, glowPulse 3.5s ease-in-out infinite;
 }
 
 
