@@ -303,7 +303,19 @@ Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczyni�
   chips.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); });
   chips.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); e.preventDefault(); }});
 
-  applyToday.addEventListener('click',()=>{ const t=todays(); currentPart=t.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); });
+applyToday.addEventListener('click',()=>{
+  const t = todays();
+  currentPart = t.part;
+  rememberPart(currentPart);
+  step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
+  setActiveChip();
+
+  // nowość: jeśli jesteś we Wprowadzeniu/Zakończeniu lub w czytaniu,
+  // wróć do ekranu startowego już z ustawioną dzisiejszą częścią
+  introMode = false;
+  endMode = false;
+  showStart();
+});
 
   introBtn.addEventListener('click',()=>{ introMode=true; endMode=false; introBtn.classList.add('active'); endBtn.classList.remove('active'); showRead(); renderStep(); });
   endBtn.addEventListener('click',()=>{ endMode=true; introMode=false; endBtn.classList.add('active'); introBtn.classList.remove('active'); showRead(); renderStep(); });
