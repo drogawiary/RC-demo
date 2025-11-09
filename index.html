@@ -1,405 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Różaniec — interaktywnie</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Droga wiary</title>
+  <meta name="description" content="Droga Wiary — strona dla katolików."/>
+  <style>
+    * { box-sizing: border-box; -webkit-text-size-adjust: 100%; }
+    html, body { margin: 0; padding: 0; }
 
-<!-- Stabilne kolory (Android/Chrome) -->
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#dce8ff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e1633" media="(prefers-color-scheme: dark)">
+    :root{
+      --bg:#1b2a49; --panel:#22355c; --panel-2:#1d2e50;
+      --ink:#e7ecf6; --muted:#aab3c6; --border:#2e4a7f;
+      --accent:#4a8cff; --accent-2:#7aa8ff; --shadow:0 10px 25px rgba(0,0,0,.25);
+    }
 
-<style>
-*{box-sizing:border-box;-webkit-text-size-adjust:100%}
-html,body{margin:0;padding:0}
-body{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg);background-image:linear-gradient(180deg,var(--bg),rgba(255,255,255,0))}
-:root{--bg:#dce8ff;--panel:#f6f9ff;--panel-2:#e4edff;--text:#0e1533;--muted:#5a6aa0;--accent:#2450ff;--accent-2:#6ea8ff;--ring:#2450ff22;--soft:#edf3ff}
-.dark{--bg:#0e1633;--panel:#161f3f;--panel-2:#1d2754;--text:#e8edff;--muted:#a7baf0;--accent:#5c82ff;--accent-2:#7faaff;--ring:#6ea8ff33;--soft:#202c5a}
-.wrap{max-width:900px;margin:0 auto;padding:16px;background:linear-gradient(180deg,var(--panel),var(--panel-2));border-radius:20px;box-shadow:0 0 20px #0003}
-/* JEDYNY blok dla nagłówka */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+    body {
+      font-family: system-ui, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+    }
 
-header.book {
-  background:#0d47a1;
-  color:#ffffff;
-  text-align:center;
-  padding:26px 20px;
-  border-radius:20px 20px 0 0;
-  font-family:'Playfair Display', serif;
-  font-size:clamp(26px,5vw,38px);
-  font-weight:600; /* cieńsze niż 900 */
-  letter-spacing:1px;
-  text-transform:none;
-  box-shadow:0 0 20px #0d47a155, inset 0 0 10px #ffffff22;
-  text-shadow:
-    0 0 6px #e8efff,
-    0 0 16px #bcd4ff,
-    0 0 28px #7faaff;
-  animation:titleIn 1.2s ease-out forwards, glowPulse 3.8s ease-in-out infinite;
-  opacity:0;
-}
+    .wrap {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      max-width: 900px;
+      width: 100%;
+      padding: 16px;
+    }
 
-/* animacje zostają te same */
-@keyframes titleIn {
-  0% { opacity:0; transform:translateY(-25px) scale(0.95); }
-  100% { opacity:1; transform:translateY(0) scale(1); }
-}
-@keyframes glowPulse {
-  0%, 100% {
-    text-shadow:
-      0 0 6px #ffffff,
-      0 0 14px #bcd4ff,
-      0 0 24px #5f7fff;
-  }
-  50% {
-    text-shadow:
-      0 0 10px #ffffff,
-      0 0 26px #a8c8ff,
-      0 0 44px #7faaff;
-  }
-}
+    header.book {
+      background: linear-gradient(145deg,#0b3d91,#1565c0,#1e88e5);
+      color: #fff;
+      text-align: center;
+      padding: 32px 20px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      font-size: clamp(32px, 5vw, 52px);
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 0 8px #fff, 0 0 16px #a8c8ff;
+      box-shadow: inset 0 0 10px #ffffff22;
+    }
 
-header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
-.topbar{background:linear-gradient(180deg,#dbe8ff 0%,#f3f6ff 100%);border-radius:14px;padding:12px 16px;box-shadow:0 2px 6px #2450ff22}
-.dark .topbar{background:linear-gradient(180deg,#131833 0%,#0a0d1e 100%);box-shadow:0 0 10px #4f7fff55}
-#themeBtn{border:1px solid var(--ring);background:var(--panel);border-radius:12px;padding:8px 14px;cursor:pointer;font-weight:700;color:var(--text)}
-.btnlink{border:1px solid var(--ring);background:var(--panel);padding:6px 10px;border-radius:10px;cursor:pointer;font-weight:700;color:var(--text)}
-.panel{margin-top:12px;background:var(--panel);border:1px solid var(--ring);border-radius:14px;padding:14px}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:var(--panel-2);border:1px solid var(--ring);border-radius:10px;padding:8px 10px;cursor:pointer;font-weight:700;color:var(--text)}
-.chip.active{outline:2px solid var(--accent-2);background:var(--soft)}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.space{flex:1}
-.bigbtn{font-size:16px;font-weight:800;letter-spacing:.2px;background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:10px 14px;cursor:pointer;color:var(--text);transition:box-shadow .25s, transform .15s}
-.bigbtn.active{box-shadow:0 0 0 3px #4f7fff33,0 0 18px 2px var(--accent-2);transform:scale(1.02)}
-.bigbtn.primary{background:var(--accent);color:#fff;border-color:transparent}
-.hide{display:none!important}
-footer{margin:14px 0 6px;color:var(--muted);text-align:center}
-.hint{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;text-align:center}
+    .buttons-frame {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
 
-/* Progress */
-.progress{height:10px;background:var(--panel-2);border:1px solid var(--ring);border-radius:999px;overflow:hidden;margin:10px 0 8px}
-.progress>div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
+    .nav-btn {
+      padding: 9px 16px;
+      border: 1px solid var(--accent);
+      color: #fff;
+      background: transparent;
+      border-radius: 20px; /* delikatne zaokrąglenie jak w różańcu */
+      font-weight: 600;
+      font-size: 0.82rem; /* mniejszy rozmiar czcionki */
+      cursor: pointer;
+      transition: all .3s ease;
+      min-width: 120px;
+    }
 
-/* Dark-mode kontrast */
-.dark .btnlink,.dark .bigbtn{color:#e8edff!important;background:#1a1f3a!important;border-color:#6ea8ff!important}
-.dark .chip{color:#e8edff;background:#1d2754;border-color:#6ea8ff33}
-.dark .chip.active{background:#202c5a;outline:2px solid var(--accent-2)}
-.dark #themeBtn{color:#e8edff}
-</style>
+    .nav-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(74,140,255,.4);
+    }
+
+    .intro-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+
+    .intro-box h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      color: var(--ink);
+    }
+
+    footer {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--muted);
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      color: var(--accent-2);
+    }
+
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="book">Różaniec</header>
-  <div class="topbar">
-    <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
-    <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+  <div class="wrap">
+    <header class="book">Droga wiary</header>
+
+    <div class="buttons-frame">
+      <button class="nav-btn">Wprowadzenie</button>
+      <button class="nav-btn">Dziękczynienie</button>
+      <button class="nav-btn">Start</button>
+    </div>
+
+    <div class="intro-box">
+      <h2>Wprowadzenie</h2>
+      <p><strong>Dlaczego bywa tak ciężko?</strong> Wielu świętych mówiło, że właśnie dlatego różaniec bywa trudny: bo diabeł wie, jak wielką moc ma ta modlitwa. Wie, że jedno „Zdrowaś” może ocalić duszę, że różaniec w rękach dziecka jest groźniejszy dla piekła niż największa armia. Dlatego odciąga nas rozproszeniem, znużeniem, myślą, że to „nudne” albo „niepotrzebne”.</p>
+      <p>Gdy trudno ci zacząć, zatrzymaj się na chwilę i pomyśl o słowach modlitwy „Zdrowaś Maryjo”. Spróbuj <strong>przytulić się sercem do Maryi</strong> – jak dziecko do swojej Matki. Ona rozumie wszystko: twoje zmęczenie, rozproszenia, lęki i brak siły. Chce tylko jednego – byś pozwolił Jej poprowadzić cię do Jezusa, jak najlepsza z matek prowadzi dziecko za rękę.</p>
+    </div>
+
+    <footer>
+      Droga wiary — strona dla katolików. ✝️ © 2025<br>
+      <a href="mailto:drogawiary@wp.pl">drogawiary@wp.pl</a>
+    </footer>
   </div>
-
-  <!-- Start -->
-  <div id="startPanel" class="panel" role="region" aria-label="Wybór części różańca">
-    <div class="row" style="margin-top:8px">
-      <div class="chips" id="chips" role="tablist" aria-label="Części różańca">
-        <div class="chip" data-part="radosne" role="tab" tabindex="0">Tajemnice radosne (pon/sob)</div>
-        <div class="chip" data-part="bolesne" role="tab" tabindex="0">Tajemnice bolesne (wt/pt)</div>
-        <div class="chip" data-part="swiatla" role="tab" tabindex="0">Tajemnice światła (czw)</div>
-        <div class="chip" data-part="chwalebne" role="tab" tabindex="0">Tajemnice chwalebne (śr/nd)</div>
-      </div>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
-      <button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
-      <span class="space"></span>
-      <button id="startBtn" class="bigbtn primary" type="button">Start</button>
-    </div>
-  </div>
-
-  <!-- Czytanie -->
-  <div id="readPanel" class="panel hide" role="region" aria-live="polite" aria-label="Treść rozważań">
-    <div class="progress"><div id="bar"></div></div>
-    <div class="content" style="background:var(--panel-2);border:1px solid var(--ring);border-radius:14px;padding:14px;min-height:210px">
-      <h3 id="stepTitle" style="margin:0 0 6px;font-size:18px">Tytuł</h3>
-      <div id="stepBody" class="muted"></div>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button id="prevBtn" class="bigbtn" type="button">⟵ Wstecz</button>
-      <button id="nextBtn" class="bigbtn primary" type="button">Dalej ⟶</button>
-      <button id="finishBtn" class="bigbtn hide" type="button">Zakończ część</button>
-    </div>
-  </div>
-
-<footer>
-  Różaniec — cztery części. ✝️ © 2025 
-  <a href="https://drogawiary.github.io/" style="color:inherit;text-decoration:none;font-weight:600;">
-    drogawiary@wp.pl
-  </a>
-</footer>
-
-</div>
-
-<script>
-(function(){
-  // ===== Mapy i stałe =====
-  const DAY_TO_PART={0:"chwalebne",1:"radosne",2:"bolesne",3:"chwalebne",4:"swiatla",5:"bolesne",6:"radosne"};
-  const PART_NAME={radosne:"Tajemnice Radosne",bolesne:"Tajemnice Bolesne",swiatla:"Tajemnice Światła",chwalebne:"Tajemnice Chwalebne"};
-  const PARTS=["radosne","bolesne","swiatla","chwalebne"];
-  const S={ step:"rozaniec:step:", done:"rozaniec:done:", lastDate:"rozaniec:lastDate", lastPart:"rozaniec:lastPart", theme:"rozaniec:theme" };
-
-  // ===== Narzędzia czasu/pamięci =====
-  function warsawDate(){ return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); }
-  function todays(){ const label=new Intl.DateTimeFormat('pl-PL',{weekday:'long',timeZone:'Europe/Warsaw'}).format(new Date()); const m={"niedziela":0,"poniedziałek":1,"wtorek":2,"środa":3,"czwartek":4,"piątek":5,"sobota":6}; const d=m[label]??0; return {label,dow:d,part:DAY_TO_PART[d]}; }
-  function keyStep(p){return S.step+p}
-  function keyDone(p){return S.done+p}
-  function savedStep(p){ const v=parseInt(localStorage.getItem(keyStep(p)),10); return Number.isFinite(v)? Math.min(Math.max(v,0), totalSteps()-1) : 0; }
-  function isDone(p){ return localStorage.getItem(keyDone(p))==="1" }
-  function setDone(p,val){ if(val){ localStorage.setItem(keyDone(p),"1"); } else { localStorage.removeItem(keyDone(p)); } }
-  function saveStep(p,v){ localStorage.setItem(keyStep(p), String(v)); }
-  function rememberPart(p){ if(p) localStorage.setItem(S.lastPart,p); }
-  function resetIfNewDay(){ const today=warsawDate(); const last=localStorage.getItem(S.lastDate); if(last && last!==today){ PARTS.forEach(p=>{ localStorage.removeItem(keyStep(p)); localStorage.removeItem(keyDone(p)); }); } localStorage.setItem(S.lastDate,today); }
-  function scheduleMidnightReset(){ const now=new Date(); const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now); const y=+parts.find(p=>p.type==='year').value, m=+parts.find(p=>p.type==='month').value, d=+parts.find(p=>p.type==='day').value; const next=new Date(Date.UTC(y,m-1,d+1,0,0,0)); const ms=next-now; setTimeout(()=>{ resetIfNewDay(); }, Math.max(1000, ms)); }
-
-  // ===== Treści =====
-  const WSTEP_HTML=`<p><strong>✝️ Znak krzyża</strong><br/>W imię Ojca i Syna, i Ducha Świętego. Amen.</p><p><strong>Ojcze nasz</strong></p><p><strong>3× Zdrowaś Maryjo</strong> (o wiarę, nadzieję i miłość)</p><p><strong>Wierzę w Boga</strong> (Skład Apostolski)</p>`;
-  const HINT='<span class="hint">Odmów: Ojcze nasz • 10× Zdrowaś Maryjo</span>';
-  const CONTENT={
-    radosne:{name:PART_NAME.radosne,intro:{title:"Modlitwy wstępne",body:WSTEP_HTML},items:[
-      {title:"I – Zwiastowanie",body:"Maryja nie planowała cudu — słuchała. Uczy zgody na Boży plan.",hint:true},
-      {title:"II – Nawiedzenie",body:"Radość dojrzewa w drodze do drugiego człowieka — w służbie.",hint:true},
-      {title:"III – Narodzenie",body:"Bóg rodzi się w miejscach, które świat omija.",hint:true},
-      {title:"IV – Ofiarowanie",body:"Miłość nie zatrzymuje — oddaje z ufnością.",hint:true},
-      {title:"V – Odnalezienie",body:"Gubimy Jezusa w pośpiechu, On czeka w domu Ojca.",hint:true}
-    ],outro:{title:"Ukończyłeś dzisiaj tę część różańca",body:"Możesz wrócić i wybrać inną część."}},
-    bolesne:{name:PART_NAME.bolesne,intro:{title:"Modlitwy wstępne",body:WSTEP_HTML},items:[
-      {title:"I – Ogrójec",body:"Nie moja, lecz Twoja wola, Panie.",hint:true},
-      {title:"II – Biczowanie",body:"Każdy grzech to rana zadana Jezusowi.",hint:true},
-      {title:"III – Cierniem ukoronowanie",body:"Pokorna wierność pośród szyderstwa.",hint:true},
-      {title:"IV – Dźwiganie krzyża",body:"Wierność w trudnościach rodzi sens.",hint:true},
-      {title:"V – Ukrzyżowanie",body:"„Ojcze, przebacz im”.",hint:true}
-    ],outro:{title:"Ukończyłeś dzisiaj tę część różańca",body:"Możesz wrócić i wybrać inną część."}},
-    swiatla:{name:PART_NAME.swiatla,intro:{title:"Modlitwy wstępne",body:WSTEP_HTML},items:[
-      {title:"I – Chrzest w Jordanie",body:"Chrzest to tożsamość — żyj nią.",hint:true},
-      {title:"II – Cud w Kanie",body:"„Zróbcie wszystko, cokolwiek wam powie”.",hint:true},
-      {title:"III – Głoszenie Królestwa",body:"Słowo budzi sumienie — nawrócenie to prawda.",hint:true},
-      {title:"IV – Przemienienie",body:"Światło z Taboru jest po to, by zejść do ludzi.",hint:true},
-      {title:"V – Eucharystia",body:"Żyj Eucharystią na co dzień.",hint:true}
-    ],outro:{title:"Ukończyłeś dzisiaj tę część różańca",body:"Możesz wrócić i wybrać inną część."}},
-    chwalebne:{name:PART_NAME.chwalebne,intro:{title:"Modlitwy wstępne",body:WSTEP_HTML},items:[
-      {title:"I – Zmartwychwstanie",body:"Nadzieja silniejsza niż grób.",hint:true},
-      {title:"II – Wniebowstąpienie",body:"Cel jest wyżej — w niebie.",hint:true},
-      {title:"III – Zesłanie Ducha Świętego",body:"Odwaga, prawda i pokój.",hint:true},
-      {title:"IV – Wniebowzięcie Maryi",body:"Wierność prowadzi do chwały.",hint:true},
-      {title:"V – Ukoronowanie Maryi",body:"Wielkość to służba.",hint:true}
-    ],outro:{title:"Ukończyłeś dzisiaj tę część różańca",body:"Możesz wrócić i wybrać inną część."}}
-  };
-
-  // ===== Elementy UI =====
-  const qs=s=>document.querySelector(s);
-  const chips=qs('#chips');
-  const applyToday=qs('#applyToday');
-  const introBtn=qs('#introBtn');
-  const endBtn=qs('#endBtn');
-  const startBtn=qs('#startBtn');
-  const themeBtn=qs('#themeBtn');
-  const startPanel=qs('#startPanel');
-  const readPanel=qs('#readPanel');
-  const stepTitle=qs('#stepTitle');
-  const stepBody=qs('#stepBody');
-  const bar=qs('#bar');
-  const prevBtn=qs('#prevBtn');
-  const nextBtn=qs('#nextBtn');
-  const finishBtn=qs('#finishBtn');
-
-  // ===== Stan =====
-  let currentPart=null; // nazwa części
-  let step=0;           // indeks kroku 0..6
-  let introMode=false;  // tryb Wprowadzenie
-  let endMode=false;    // tryb Dziękczynienie
-
-  // ===== Dzienna pamięć =====
-  resetIfNewDay();
-  scheduleMidnightReset();
-
-  // ===== Render =====
-  function totalSteps(){return 7}
-  function showStart(){startPanel.classList.remove('hide');readPanel.classList.add('hide');introBtn.classList.remove('active');endBtn.classList.remove('active');}
-  function showRead(){readPanel.classList.remove('hide');startPanel.classList.add('hide')}
-
-  function renderStep(){
-    if(introMode){
-      const t=todays();
-      stepTitle.textContent='Wprowadzenie';
-stepBody.innerHTML = `
-<p><strong>Dlaczego bywa tak ciężko?</strong> Wielu świętych mówiło, że właśnie dlatego różaniec bywa trudny:
-bo diabeł wie, jak wielką moc ma ta modlitwa. Wie, że jedno „Zdrowaś” może ocalić duszę,
-że różaniec w rękach dziecka jest groźniejszy dla piekła niż największa armia.
-Dlatego odciąga nas rozproszeniem, znużeniem, myślą, że to „nudne” albo „niepotrzebne”.</p>
-
-<p>Gdy trudno ci zacząć, zatrzymaj się na chwilę i pomyśl o słowach modlitwy „Zdrowaś Maryjo”.
-Spróbuj <strong>przytulić się sercem do Maryi</strong> – jak dziecko do swojej Matki.
-Ona rozumie wszystko: twoje zmęczenie, rozproszenia, lęki i brak siły.
-Chce tylko jednego – byś pozwolił Jej poprowadzić cię do Jezusa, jak najlepsza z matek prowadzi dziecko za rękę.</p>
-
-<p>Z czułością wypowiadasz słowa, które <strong>Anioł Gabriel</strong> przyniósł do Niej z orędziem nieba:
-<em>„Zdrowaś Maryjo, łaski pełna, Pan z Tobą.”</em>
-To były najważniejsze słowa w Jej życiu – zwiastowały, że zostanie Matką samego Boga.
-A potem dołączasz do głosu <strong>świętej Elżbiety</strong>, która z zachwytem i wiarą zawołała:
-<em>„Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus.”</em></p>
-
-<p>Kiedy więc mówisz „Zdrowaś Maryjo”, <strong>nie jesteś sam</strong>.
-Maryja, Elżbieta i Anioł są przy tobie – naprawdę.
-To nie recytacja, lecz <strong>rozmowa z Matką</strong>, która słucha z miłością i niesie twoje słowa do swojego Syna.
-W tej modlitwie nie tylko wspominasz, ale <strong>uczestniczysz w tajemnicy spotkania Boga z człowiekiem</strong>.</p>
-
-<p>
-  Postaraj się odmawiać różaniec nie w pośpiechu, lecz ze zrozumieniem.
-  Bo gdy modlisz się tylko po to, by „zdążyć” lub „zaliczyć” modlitwę —
-  pomyśl, czy Maryi nie jest wtedy smutno?
-</p>
-
-
-<p>Maryja powtarzała to we wszystkich miejscach swoich objawień:
-<strong>„Odmawiajcie codziennie różaniec.”</strong></p>
-
-<p><em>Jak powiedziała s. Fernanda z Fatimy:</em><br>
-<strong>„Różaniec jest jak mleko dla dziecka – pierwszy pokarm dla duszy.
-Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za rękę i prowadzi do Jezusa.”</strong></p>
-
-<hr style="margin:10px 0;opacity:0.5;">
-
-<p>Z modlitwy Kościoła, z objawień i świadectw świętych wyłania się cicha obietnica:
-<strong>wytrwały różaniec przynosi wielkie łaski.</strong></p>
-
-<ul>
-  <li>Szczególna opieka w życiu i przy śmierci.</li>
-  <li>Nawrócenie największych grzeszników — nawet najtwardsze serce może się skruszyć.</li>
-  <li>Ochrona przed złem — każde „Zdrowaś Maryjo” to cios w szatana i tarcza dla duszy.</li>
-  <li>Pokój w rodzinach.</li>
-  <li>Uzdrowienia duszy i ciała — świadectwa z Lourdes, Fatimy, Gietrzwałdu.</li>
-  <li>Wysłuchanie próśb zgodnie z wolą Bożą.</li>
-  <li>Pomoc w trudnościach — „Odmawiajcie różaniec, a otrzymacie łaski potrzebne w życiu.”</li>
-  <li>Przygotowanie na trudne czasy — kto trzyma się różańca, nie zginie.</li>
-</ul>
-`;
-
-      nextBtn.classList.add('hide');
-      finishBtn.classList.add('hide');
-      if(bar) bar.style.width='0%';
-      return;
-    }
-    if(endMode){
-      stepTitle.textContent='Dziękczynienie';
-      stepBody.innerHTML=`
-<p><em>Dziękuję Ci, Maryjo, że pozwoliłaś mi odkryć moc tej modlitwy.</em></p>
-
-<p><strong>„Różaniec odmawiany z wiarą i pobożnością jest ratunkiem dla duszy i zwycięstwem nad szatanem.”</strong><br>
-<strong>„Jedno Zdrowaś Maryjo świadomie i uważnie odmówione ma większą wartość niż setki bezmyślnych słów.”</strong><br>
-— św. Ludwik Maria Grignion de Montfort</p>
-
-<p><strong>„Różaniec to modlitwa tych, którzy kochają, ale nie wiedzą, jak mówić.”</strong><br>
-— św. Jan Paweł II</p>
-
-<p><strong>„Różaniec to łańcuch, który łączy nas z Bogiem.”</strong><br>
-— św. Teresa z Lisieux</p>
-
-<p><strong>„Jeśli chcesz nawrócić grzesznika, odmów za niego różaniec.”</strong><br>
-— św. Jan Maria Vianney</p>
-
-<p><strong>„Gdy mówisz różaniec, Maryja jest tuż obok ciebie.”</strong><br>
-— św. Alfons Maria Liguori</p>
-
-<hr style="margin:10px 0;opacity:0.5;">
-
-<p>Różaniec jest modlitwą pełną obietnic. Maryja obiecuje pomoc, ochronę, pokój i łaski tym, którzy trwają z Nią na modlitwie.
-Ale pamiętaj — każda modlitwa ma w sobie wartość ofiary.</p>
-
-<p>To nie jest wygodne siedzenie — to dar z siebie.  
-Gdy klękasz z różańcem, gdy bolą kolana albo plecy — właśnie wtedy modlitwa nabiera mocy.  
-Wtedy oddajesz coś z siebie Bogu.  
-Bo jeśli prosisz Go o łaskę, pokaż Mu, że chcesz w niej uczestniczyć całym sercem i ciałem.</p>
-
-<p><em>Nie musisz mieć wielkiej wiary, żeby zacząć – zacznij, by wiara mogła w tobie wzrosnąć.  
-Nie musisz mieć siły, żeby wytrwać – weź różaniec, a siła przyjdzie sama.  
-Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczynić świętym.</em></p>
-
-<p><strong>Spróbuj choć dziesiątkę. To jak otwarcie małego okna — a przez nie wejdzie światło.</strong></p>`;
-      nextBtn.classList.add('hide');
-      finishBtn.classList.add('hide');
-      if(bar) bar.style.width='100%';
-      return;
-    }
-
-    let d=CONTENT[currentPart];
-    if(!d){ currentPart='radosne'; d=CONTENT[currentPart]; }
-
-    const max=totalSteps();
-    let title,body;
-    if(step===0){ title=d.intro.title; body=d.intro.body; }
-    else if(step===max-1){ title=d.outro.title; body=d.outro.body; }
-    else { const it=d.items[step-1]; title=it.title; body=it.body + (it.hint? ' '+HINT : ''); }
-
-    stepTitle.textContent=title;
-    stepBody.innerHTML=`<p style="margin:0;line-height:1.6">${body}</p>`;
-
-    // zapis postępu + pasek
-    saveStep(currentPart, step);
-    if(bar){ const pct=Math.round((step/(max-1))*100); bar.style.width=pct+'%'; }
-
-    nextBtn.classList.toggle('hide', step===max-1);
-    finishBtn.classList.toggle('hide', step!==max-1);
-  }
-
-  // ===== Zdarzenia =====
-  function setActiveChip(){ document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active', x.dataset.part===currentPart)); }
-
-  chips.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); });
-  chips.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); e.preventDefault(); }});
-
-applyToday.addEventListener('click',()=>{
-  const t = todays();
-  currentPart = t.part;
-  rememberPart(currentPart);
-  step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-  setActiveChip();
-
-  // nowość: jeśli jesteś we Wprowadzeniu/Zakończeniu lub w czytaniu,
-  // wróć do ekranu startowego już z ustawioną dzisiejszą częścią
-  introMode = false;
-  endMode = false;
-  showStart();
-});
-
-  introBtn.addEventListener('click',()=>{ introMode=true; endMode=false; introBtn.classList.add('active'); endBtn.classList.remove('active'); showRead(); renderStep(); });
-  endBtn.addEventListener('click',()=>{ endMode=true; introMode=false; endBtn.classList.add('active'); introBtn.classList.remove('active'); showRead(); renderStep(); });
-
-  startBtn.addEventListener('click',()=>{
-    introMode=false; endMode=false; introBtn.classList.remove('active'); endBtn.classList.remove('active');
-    if(!currentPart){ const last=localStorage.getItem(S.lastPart); if(last && PARTS.includes(last)) currentPart=last; else currentPart=todays().part; }
-    step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-    rememberPart(currentPart);
-    showRead();
-    renderStep();
-  });
-
-  prevBtn.addEventListener('click',()=>{ if(introMode||endMode){ introMode=false; endMode=false; showStart(); return; } if(step===0){ showStart(); return; } step=Math.max(0,step-1); renderStep(); });
-  nextBtn.addEventListener('click',()=>{ step=Math.min(totalSteps()-1,step+1); renderStep(); });
-  finishBtn.addEventListener('click',()=>{ setDone(currentPart,true); step=totalSteps()-1; saveStep(currentPart, step); rememberPart(currentPart); showStart(); setActiveChip(); });
-
-  themeBtn.addEventListener('click',()=>{ const root=document.documentElement; const isDark=root.classList.toggle('dark'); localStorage.setItem(S.theme, isDark? 'dark' : 'light'); });
-
-  // ===== Inicjalizacja =====
-  const savedTheme=localStorage.getItem(S.theme); if(savedTheme==='dark'){ document.documentElement.classList.add('dark'); }
-  const last=localStorage.getItem(S.lastPart);
-  currentPart = PARTS.includes(last)? last : todays().part;
-  step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-  setActiveChip();
-
-  // ===== Mini testy w konsoli =====
-  try{
-    console.assert(typeof CONTENT.radosne.intro.body==='string','Intro radosne istnieje');
-    console.assert(totalSteps()===7,'totalSteps==7');
-  }catch(e){ console.warn('Test ostrzegawczy:', e); }
-})();
-</script>
 </body>
 </html>
