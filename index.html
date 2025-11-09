@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Różaniec — interaktywnie</title>
 
-<!-- Stabilne kolory (Android/Chrome) -->
+
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#dce8ff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e1633" media="(prefers-color-scheme: dark)">
+
 
 <style>
 *{box-sizing:border-box;-webkit-text-size-adjust:100%}
@@ -17,7 +18,18 @@ body{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial
 :root{--bg:#dce8ff;--panel:#f6f9ff;--panel-2:#e4edff;--text:#0e1533;--muted:#5a6aa0;--accent:#2450ff;--accent-2:#6ea8ff;--ring:#2450ff22;--soft:#edf3ff}
 .dark{--bg:#0e1633;--panel:#161f3f;--panel-2:#1d2754;--text:#e8edff;--muted:#a7baf0;--accent:#5c82ff;--accent-2:#7faaff;--ring:#6ea8ff33;--soft:#202c5a}
 .wrap{max-width:900px;margin:0 auto;padding:16px;background:linear-gradient(180deg,var(--panel),var(--panel-2));border-radius:20px;box-shadow:0 0 20px #0003}
-header.book{background:#cce5ff;color:#000033;text-align:center;padding:20px;border-radius:20px 20px 0 0;font-size:clamp(22px,4vw,30px);font-weight:800;box-shadow:0 2px 8px #0002}
+header.book{
+background: linear-gradient(145deg,#0b3d91,#1565c0,#1e88e5);
+color: #fff;
+text-align: center;
+padding: 32px 20px;
+border-radius: 20px 20px 0 0;
+font-size: clamp(28px, 5vw, 40px);
+font-family: 'Playfair Display', serif;
+text-shadow: 0 0 8px #fff, 0 0 16px #a8c8ff;
+box-shadow: inset 0 0 10px #ffffff22, 0 2px 8px #0002;
+font-weight: 800;
+}
 header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
 .topbar{background:linear-gradient(180deg,#dbe8ff 0%,#f3f6ff 100%);border-radius:14px;padding:12px 16px;box-shadow:0 2px 6px #2450ff22}
 .dark .topbar{background:linear-gradient(180deg,#131833 0%,#0a0d1e 100%);box-shadow:0 0 10px #4f7fff55}
@@ -35,12 +47,8 @@ header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
 .hide{display:none!important}
 footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 .hint{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;text-align:center}
-
-/* Progress */
 .progress{height:10px;background:var(--panel-2);border:1px solid var(--ring);border-radius:999px;overflow:hidden;margin:10px 0 8px}
 .progress>div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
-
-/* Dark-mode kontrast */
 .dark .btnlink,.dark .bigbtn{color:#e8edff!important;background:#1a1f3a!important;border-color:#6ea8ff!important}
 .dark .chip{color:#e8edff;background:#1d2754;border-color:#6ea8ff33}
 .dark .chip.active{background:#202c5a;outline:2px solid var(--accent-2)}
@@ -49,11 +57,11 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 </head>
 <body>
 <div class="wrap">
-  <header class="book">Różaniec</header>
-  <div class="topbar">
-    <button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
-    <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
-  </div>
+<header class="book">Różaniec</header>
+<div class="topbar">
+<button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
+<button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+</div>
 
   <!-- Start -->
   <div id="startPanel" class="panel" role="region" aria-label="Wybór części różańca">
