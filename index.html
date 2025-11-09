@@ -5,35 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Różaniec — interaktywnie</title>
 
-
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#dce8ff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e1633" media="(prefers-color-scheme: dark)">
-
+<!-- Tryb nocny na stałe -->
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e1633">
 
 <style>
 *{box-sizing:border-box;-webkit-text-size-adjust:100%}
 html,body{margin:0;padding:0}
 body{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg);background-image:linear-gradient(180deg,var(--bg),rgba(255,255,255,0))}
-:root{--bg:#dce8ff;--panel:#f6f9ff;--panel-2:#e4edff;--text:#0e1533;--muted:#5a6aa0;--accent:#2450ff;--accent-2:#6ea8ff;--ring:#2450ff22;--soft:#edf3ff}
-.dark{--bg:#0e1633;--panel:#161f3f;--panel-2:#1d2754;--text:#e8edff;--muted:#a7baf0;--accent:#5c82ff;--accent-2:#7faaff;--ring:#6ea8ff33;--soft:#202c5a}
+:root{--bg:#0e1633;--panel:#161f3f;--panel-2:#1d2754;--text:#e8edff;--muted:#a7baf0;--accent:#5c82ff;--accent-2:#7faaff;--ring:#6ea8ff33;--soft:#202c5a}
 .wrap{max-width:900px;margin:0 auto;padding:16px;background:linear-gradient(180deg,var(--panel),var(--panel-2));border-radius:20px;box-shadow:0 0 20px #0003}
 header.book{
-background: linear-gradient(145deg,#0b3d91,#1565c0,#1e88e5);
-color: #fff;
-text-align: center;
-padding: 32px 20px;
-border-radius: 20px 20px 0 0;
-font-size: clamp(28px, 5vw, 40px);
-font-family: 'Playfair Display', serif;
-text-shadow: 0 0 8px #fff, 0 0 16px #a8c8ff;
-box-shadow: inset 0 0 10px #ffffff22, 0 2px 8px #0002;
-font-weight: 800;
+  background: linear-gradient(145deg,#0b3d91,#1565c0,#1e88e5);
+  color: #fff;
+  text-align: center;
+  padding: 32px 20px;
+  border-radius: 20px 20px 0 0;
+  font-size: clamp(28px, 5vw, 40px);
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 0 8px #fff, 0 0 16px #a8c8ff;
+  box-shadow: inset 0 0 10px #ffffff22, 0 2px 8px #0002;
+  font-weight: 800;
 }
 header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
-.topbar{background:linear-gradient(180deg,#dbe8ff 0%,#f3f6ff 100%);border-radius:14px;padding:12px 16px;box-shadow:0 2px 6px #2450ff22}
-.dark .topbar{background:linear-gradient(180deg,#131833 0%,#0a0d1e 100%);box-shadow:0 0 10px #4f7fff55}
-#themeBtn{border:1px solid var(--ring);background:var(--panel);border-radius:12px;padding:8px 14px;cursor:pointer;font-weight:700;color:var(--text)}
+.topbar{background:linear-gradient(180deg,#131833 0%,#0a0d1e 100%);border-radius:14px;padding:12px 16px;box-shadow:0 0 10px #4f7fff55}
 .btnlink{border:1px solid var(--ring);background:var(--panel);padding:6px 10px;border-radius:10px;cursor:pointer;font-weight:700;color:var(--text)}
 .panel{margin-top:12px;background:var(--panel);border:1px solid var(--ring);border-radius:14px;padding:14px}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -49,19 +44,15 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 .hint{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;text-align:center}
 .progress{height:10px;background:var(--panel-2);border:1px solid var(--ring);border-radius:999px;overflow:hidden;margin:10px 0 8px}
 .progress>div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
-.dark .btnlink,.dark .bigbtn{color:#e8edff!important;background:#1a1f3a!important;border-color:#6ea8ff!important}
-.dark .chip{color:#e8edff;background:#1d2754;border-color:#6ea8ff33}
-.dark .chip.active{background:#202c5a;outline:2px solid var(--accent-2)}
-.dark #themeBtn{color:#e8edff}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="book">Różaniec</header>
-<div class="topbar">
-<button id="themeBtn" title="Tryb dzień/noc">🌞/🌙</button>
-<button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
-</div>
+  <header class="book">Różaniec</header>
+  <div class="topbar">
+    <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+    <button id="startBtn" class="bigbtn primary" type="button">Start</button>
+  </div>
 
   <!-- Start -->
   <div id="startPanel" class="panel" role="region" aria-label="Wybór części różańca">
@@ -76,8 +67,6 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
     <div class="row" style="margin-top:10px">
       <button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
       <button id="endBtn" class="bigbtn" type="button">Zakończenie</button>
-      <span class="space"></span>
-      <button id="startBtn" class="bigbtn primary" type="button">Start</button>
     </div>
   </div>
 
@@ -95,22 +84,24 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
     </div>
   </div>
 
-<footer>
-  Różaniec — cztery części. ✝️ © 2025 
-  <a href="https://drogawiary.github.io/" style="color:inherit;text-decoration:none;font-weight:600;">
-    drogawiary@wp.pl
-  </a>
-</footer>
-
+  <footer>
+    Różaniec — cztery części. ✝️ © 2025 
+    <a href="https://drogawiary.github.io/" style="color:inherit;text-decoration:none;font-weight:600;">
+      drogawiary@wp.pl
+    </a>
+  </footer>
 </div>
 
 <script>
+// Stały tryb nocny
+document.documentElement.classList.add('dark');
+
 (function(){
   // ===== Mapy i stałe =====
   const DAY_TO_PART={0:"chwalebne",1:"radosne",2:"bolesne",3:"chwalebne",4:"swiatla",5:"bolesne",6:"radosne"};
   const PART_NAME={radosne:"Tajemnice Radosne",bolesne:"Tajemnice Bolesne",swiatla:"Tajemnice Światła",chwalebne:"Tajemnice Chwalebne"};
   const PARTS=["radosne","bolesne","swiatla","chwalebne"];
-  const S={ step:"rozaniec:step:", done:"rozaniec:done:", lastDate:"rozaniec:lastDate", lastPart:"rozaniec:lastPart", theme:"rozaniec:theme" };
+  const S={ step:"rozaniec:step:", done:"rozaniec:done:", lastDate:"rozaniec:lastDate", lastPart:"rozaniec:lastPart" };
 
   // ===== Narzędzia czasu/pamięci =====
   function warsawDate(){ return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); }
@@ -166,7 +157,7 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
   const introBtn=qs('#introBtn');
   const endBtn=qs('#endBtn');
   const startBtn=qs('#startBtn');
-  const themeBtn=qs('#themeBtn');
+  const startBtn2=qs('#startBtn2');
   const startPanel=qs('#startPanel');
   const readPanel=qs('#readPanel');
   const stepTitle=qs('#stepTitle');
@@ -193,9 +184,8 @@ footer{margin:14px 0 6px;color:var(--muted);text-align:center}
 
   function renderStep(){
     if(introMode){
-      const t=todays();
       stepTitle.textContent='Wprowadzenie';
-stepBody.innerHTML = `
+      stepBody.innerHTML = `
 <p><strong>Dlaczego bywa tak ciężko?</strong> Wielu świętych mówiło, że właśnie dlatego różaniec bywa trudny:
 bo diabeł wie, jak wielką moc ma ta modlitwa. Wie, że jedno „Zdrowaś” może ocalić duszę,
 że różaniec w rękach dziecka jest groźniejszy dla piekła niż największa armia.
@@ -223,7 +213,6 @@ W tej modlitwie nie tylko wspominasz, ale <strong>uczestniczysz w tajemnicy spot
   pomyśl, czy Maryi nie jest wtedy smutno?
 </p>
 
-
 <p>Maryja powtarzała to we wszystkich miejscach swoich objawień:
 <strong>„Odmawiajcie codziennie różaniec.”</strong></p>
 
@@ -246,8 +235,13 @@ Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za ręk�
   <li>Pomoc w trudnościach — „Odmawiajcie różaniec, a otrzymacie łaski potrzebne w życiu.”</li>
   <li>Przygotowanie na trudne czasy — kto trzyma się różańca, nie zginie.</li>
 </ul>
-`;
 
+<hr style="margin:10px 0;opacity:0.5;">
+<p style="margin-bottom:6px"><strong>Modlitwy wstępne (gdy chcesz rozpocząć część):</strong></p>
+<p><strong>✝️ Znak krzyża</strong><br/>W imię Ojca i Syna, i Ducha Świętego. Amen.</p>
+<p><strong>Ojcze nasz</strong></p>
+<p><strong>3× Zdrowaś Maryjo</strong> (o wiarę, nadzieję i miłość)</p>
+<p><strong>Wierzę w Boga</strong> (Skład Apostolski)</p>`;
       nextBtn.classList.add('hide');
       finishBtn.classList.add('hide');
       if(bar) bar.style.width='0%';
@@ -255,40 +249,7 @@ Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za ręk�
     }
     if(endMode){
       stepTitle.textContent='Dziękczynienie';
-      stepBody.innerHTML=`
-<p><em>Dziękuję Ci, Maryjo, że pozwoliłaś mi odkryć moc tej modlitwy.</em></p>
-
-<p><strong>„Różaniec odmawiany z wiarą i pobożnością jest ratunkiem dla duszy i zwycięstwem nad szatanem.”</strong><br>
-<strong>„Jedno Zdrowaś Maryjo świadomie i uważnie odmówione ma większą wartość niż setki bezmyślnych słów.”</strong><br>
-— św. Ludwik Maria Grignion de Montfort</p>
-
-<p><strong>„Różaniec to modlitwa tych, którzy kochają, ale nie wiedzą, jak mówić.”</strong><br>
-— św. Jan Paweł II</p>
-
-<p><strong>„Różaniec to łańcuch, który łączy nas z Bogiem.”</strong><br>
-— św. Teresa z Lisieux</p>
-
-<p><strong>„Jeśli chcesz nawrócić grzesznika, odmów za niego różaniec.”</strong><br>
-— św. Jan Maria Vianney</p>
-
-<p><strong>„Gdy mówisz różaniec, Maryja jest tuż obok ciebie.”</strong><br>
-— św. Alfons Maria Liguori</p>
-
-<hr style="margin:10px 0;opacity:0.5;">
-
-<p>Różaniec jest modlitwą pełną obietnic. Maryja obiecuje pomoc, ochronę, pokój i łaski tym, którzy trwają z Nią na modlitwie.
-Ale pamiętaj — każda modlitwa ma w sobie wartość ofiary.</p>
-
-<p>To nie jest wygodne siedzenie — to dar z siebie.  
-Gdy klękasz z różańcem, gdy bolą kolana albo plecy — właśnie wtedy modlitwa nabiera mocy.  
-Wtedy oddajesz coś z siebie Bogu.  
-Bo jeśli prosisz Go o łaskę, pokaż Mu, że chcesz w niej uczestniczyć całym sercem i ciałem.</p>
-
-<p><em>Nie musisz mieć wielkiej wiary, żeby zacząć – zacznij, by wiara mogła w tobie wzrosnąć.  
-Nie musisz mieć siły, żeby wytrwać – weź różaniec, a siła przyjdzie sama.  
-Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczynić świętym.</em></p>
-
-<p><strong>Spróbuj choć dziesiątkę. To jak otwarcie małego okna — a przez nie wejdzie światło.</strong></p>`;
+      stepBody.innerHTML=`<p><em>Dziękujemy za wspólną modlitwę różańcową.</em></p>`;
       nextBtn.classList.add('hide');
       finishBtn.classList.add('hide');
       if(bar) bar.style.width='100%';
@@ -321,50 +282,45 @@ Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczyni�
   chips.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); });
   chips.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); e.preventDefault(); }});
 
-applyToday.addEventListener('click',()=>{
-  const t = todays();
-  currentPart = t.part;
-  rememberPart(currentPart);
-  step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-  setActiveChip();
+  applyToday.addEventListener('click',()=>{
+    const t = todays();
+    currentPart = t.part;
+    rememberPart(currentPart);
+    step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
+    setActiveChip();
+    introMode = false;
+    endMode = false;
+    showStart();
+  });
 
-  // nowość: jeśli jesteś we Wprowadzeniu/Zakończeniu lub w czytaniu,
-  // wróć do ekranu startowego już z ustawioną dzisiejszą częścią
-  introMode = false;
-  endMode = false;
-  showStart();
-});
-
-  introBtn.addEventListener('click',()=>{ introMode=true; endMode=false; introBtn.classList.add('active'); endBtn.classList.remove('active'); showRead(); renderStep(); });
-  endBtn.addEventListener('click',()=>{ endMode=true; introMode=false; endBtn.classList.add('active'); introBtn.classList.remove('active'); showRead(); renderStep(); });
-
-  startBtn.addEventListener('click',()=>{
+  function startFlow(){
     introMode=false; endMode=false; introBtn.classList.remove('active'); endBtn.classList.remove('active');
-    if(!currentPart){ const last=localStorage.getItem(S.lastPart); if(last && PARTS.includes(last)) currentPart=last; else currentPart=todays().part; }
+    if(!currentPart){ const last=localStorage.getItem('rozaniec:lastPart'); if(last && PARTS.includes(last)) currentPart=last; else currentPart=todays().part; }
     step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
     rememberPart(currentPart);
     showRead();
     renderStep();
-  });
+  }
+
+  startBtn.addEventListener('click', startFlow);
+  if(startBtn2) startBtn2.addEventListener('click', startFlow);
+
+  introBtn.addEventListener('click',()=>{ introMode=true; endMode=false; introBtn.classList.add('active'); endBtn.classList.remove('active'); showRead(); renderStep(); });
+  endBtn.addEventListener('click',()=>{ endMode=true; introMode=false; endBtn.classList.add('active'); introBtn.classList.remove('active'); showRead(); renderStep(); });
 
   prevBtn.addEventListener('click',()=>{ if(introMode||endMode){ introMode=false; endMode=false; showStart(); return; } if(step===0){ showStart(); return; } step=Math.max(0,step-1); renderStep(); });
   nextBtn.addEventListener('click',()=>{ step=Math.min(totalSteps()-1,step+1); renderStep(); });
   finishBtn.addEventListener('click',()=>{ setDone(currentPart,true); step=totalSteps()-1; saveStep(currentPart, step); rememberPart(currentPart); showStart(); setActiveChip(); });
 
-  themeBtn.addEventListener('click',()=>{ const root=document.documentElement; const isDark=root.classList.toggle('dark'); localStorage.setItem(S.theme, isDark? 'dark' : 'light'); });
-
   // ===== Inicjalizacja =====
-  const savedTheme=localStorage.getItem(S.theme); if(savedTheme==='dark'){ document.documentElement.classList.add('dark'); }
-  const last=localStorage.getItem(S.lastPart);
+  document.documentElement.classList.add('dark');
+  const last=localStorage.getItem('rozaniec:lastPart');
   currentPart = PARTS.includes(last)? last : todays().part;
   step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
   setActiveChip();
 
-  // ===== Mini testy w konsoli =====
-  try{
-    console.assert(typeof CONTENT.radosne.intro.body==='string','Intro radosne istnieje');
-    console.assert(totalSteps()===7,'totalSteps==7');
-  }catch(e){ console.warn('Test ostrzegawczy:', e); }
+  // Mini testy
+  try{ console.assert(totalSteps()===7,'totalSteps==7'); }catch(e){ console.warn('Test:', e); }
 })();
 </script>
 </body>
