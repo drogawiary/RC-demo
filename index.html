@@ -238,7 +238,18 @@ Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za ręk�
       if(bar) bar.style.width='0%';
       return;
     }
-
+if(endMode){
+stepTitle.textContent='Dziękczynienie';
+stepBody.innerHTML=`
+<p><em>Dziękuję Ci, Maryjo, za wspólną modlitwę.</em></p>
+<p><strong>„Jedno Zdrowaś świadomie i uważnie odmówione ma większą wartość niż setki bezmyślnych słów.”</strong><br><small>(przyp. św. Ludwik M. Grignion de Montfort)</small></p>
+<p><strong>„Różaniec to łańcuch, który łączy nas z Bogiem.”</strong><br><small>(św. Teresa z Lisieux)</small></p>
+<p><em>Niech ta modlitwa przyniesie pokój mojemu sercu i domowi.</em></p>`;
+nextBtn.classList.add('hide');
+finishBtn.classList.add('hide');
+if(bar) bar.style.width='100%';
+return;
+}
     let d=CONTENT[currentPart];
     if(!d){ currentPart='radosne'; d=CONTENT[currentPart]; }
 
