@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Różaniec — interaktywnie</title>
 
-<!-- Stały tryb nocny / Android-friendly colors -->
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0e1633">
+
+<!-- Stały tryb jasny, łagodny styl jak w Droga Wiary -->
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#1b2a49">
+
 
 <style>
 *{box-sizing:border-box;-webkit-text-size-adjust:100%}
 html,body{margin:0;padding:0}
-body{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg);background-image:linear-gradient(180deg,var(--bg),rgba(255,255,255,0))}
-:root{--bg:#0e1633;--panel:#161f3f;--panel-2:#1d2754;--text:#e8edff;--muted:#a7baf0;--accent:#5c82ff;--accent-2:#7faaff;--ring:#6ea8ff33;--soft:#202c5a}
+body{font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg)}
+:root{--bg:#1b2a49;--panel:#22355c;--panel-2:#1d2e50;--text:#e7ecf6;--muted:#aab3c6;--accent:#4a8cff;--accent-2:#7aa8ff;--ring:#6ea8ff33;--soft:#223b6d}
 .wrap{max-width:900px;margin:0 auto;padding:16px;background:linear-gradient(180deg,var(--panel),var(--panel-2));border-radius:20px;box-shadow:0 0 20px #0003}
 header.book{background:linear-gradient(145deg,#0b3d91,#1565c0,#1e88e5);color:#fff;text-align:center;padding:32px 20px;border-radius:20px 20px 0 0;font-size:clamp(28px,5vw,40px);font-family:'Playfair Display',serif;text-shadow:0 0 8px #fff,0 0 16px #a8c8ff;box-shadow:inset 0 0 10px #ffffff22,0 2px 8px #0002;font-weight:800}
-header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
-.topbar{background:linear-gradient(180deg,#131833 0%,#0a0d1e 100%);border-radius:14px;padding:12px 16px;box-shadow:0 0 10px #4f7fff55}
+.topbar{background:linear-gradient(180deg,#22355c 0%,#1b2a49 100%);border-radius:14px;padding:12px 16px;box-shadow:0 0 10px #4f7fff55;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
 .btnlink{border:1px solid var(--ring);background:var(--panel);padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:700;color:var(--text)}
 .bigbtn{font-size:16px;font-weight:800;letter-spacing:.2px;background:var(--panel);border:1px solid var(--ring);border-radius:12px;padding:10px 14px;cursor:pointer;color:var(--text);transition:box-shadow .25s, transform .15s}
 .bigbtn.primary{background:var(--accent);color:#fff;border-color:transparent}
@@ -29,57 +30,42 @@ header.book+.topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .space{flex:1}
 .hide{display:none!important}
-footer{margin:14px 0 6px;color:var(--muted);text-align:center}
+footer{margin:16px 0 0;background:var(--panel);border:1px solid var(--ring);border-radius:14px;color:var(--text);text-align:center;padding:16px;box-shadow:0 6px 16px #0003}
+footer .fmuted{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+footer a{color:var(--text);text-decoration:none;font-weight:700}
+footer a:hover{color:var(--accent-2)}
 .hint{display:block;margin-top:10px;font-size:13px;color:var(--muted);font-style:italic;text-align:center}
 .progress{height:10px;background:var(--panel-2);border:1px solid var(--ring);border-radius:999px;overflow:hidden;margin:10px 0 8px}
 .progress>div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s}
-/* Czytelność długich treści */
 .content{background:var(--panel-2);border:1px solid var(--ring);border-radius:14px;padding:14px;min-height:210px;max-height:70vh;overflow-y:auto}
 blockquote{margin:0 0 8px;padding:8px 12px;border-left:3px solid var(--accent-2);background:#ffffff10;border-radius:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="book">Różaniec</header>
-  <div class="topbar">
-    <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
-    <button id="startBtn" class="bigbtn primary" type="button">Start</button>
-  </div>
+<header class="book">Różaniec</header>
+<div class="topbar">
+<button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+<button id="startBtn" class="bigbtn primary" type="button">Start</button>
+</div>
 
-  <!-- Start -->
-  <div id="startPanel" class="panel" role="region" aria-label="Wybór części różańca">
-    <div class="row" style="margin-top:8px">
-      <div class="chips" id="chips" role="tablist" aria-label="Części różańca">
-        <div class="chip" data-part="radosne" role="tab" tabindex="0">Tajemnice radosne (pon/sob)</div>
-        <div class="chip" data-part="bolesne" role="tab" tabindex="0">Tajemnice bolesne (wt/pt)</div>
-        <div class="chip" data-part="swiatla" role="tab" tabindex="0">Tajemnice światła (czw)</div>
-        <div class="chip" data-part="chwalebne" role="tab" tabindex="0">Tajemnice chwalebne (śr/nd)</div>
-      </div>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
-      <button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
-    </div>
-  </div>
 
-  <!-- Czytanie -->
-  <div id="readPanel" class="panel hide" role="region" aria-live="polite" aria-label="Treść rozważań">
-    <div class="progress"><div id="bar"></div></div>
-    <div class="content">
-      <h3 id="stepTitle" style="margin:0 0 6px;font-size:18px">Tytuł</h3>
-      <div id="stepBody" class="muted"></div>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button id="prevBtn" class="bigbtn" type="button">⟵ Wstecz</button>
-      <button id="nextBtn" class="bigbtn primary" type="button">Dalej ⟶</button>
-      <button id="finishBtn" class="bigbtn hide" type="button">Zakończ część</button>
-    </div>
-  </div>
+<div id="startPanel" class="panel">
+<div class="row" style="margin-top:8px">
+<div class="chips" id="chips">
+<div class="chip" data-part="radosne">Tajemnice radosne (pon/sob)</div>
+<div class="chip" data-part="bolesne">Tajemnice bolesne (wt/pt)</div>
+<div class="chip" data-part="swiatla">Tajemnice światła (czw)</div>
+<div class="chip" data-part="chwalebne">Tajemnice chwalebne (śr/nd)</div>
+</div>
+</div>
+<div class="row" style="margin-top:10px">
+<button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
+<button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
+</div>
+</div>
 
-  <footer>
-    Różaniec — cztery części. ✝️ © 2025 
-    <a href="https://drogawiary.github.io/" style="color:inherit;text-decoration:none;font-weight:600;">drogawiary@wp.pl</a>
-  </footer>
+
 </div>
 
 <script>
