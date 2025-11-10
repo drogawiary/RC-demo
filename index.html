@@ -5,11 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Różaniec — interaktywnie</title>
 
-
 <!-- Stały tryb jasny, łagodny styl jak w Droga Wiary -->
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#1b2a49">
-
 
 <style>
 *{box-sizing:border-box;-webkit-text-size-adjust:100%}
@@ -43,27 +41,45 @@ blockquote{margin:0 0 8px;padding:8px 12px;border-left:3px solid var(--accent-2)
 </head>
 <body>
 <div class="wrap">
-<header class="book">Różaniec</header>
-<div class="topbar">
-<button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
-<button id="startBtn" class="bigbtn primary" type="button">Start</button>
-</div>
+  <header class="book">Różaniec</header>
+  <div class="topbar">
+    <button id="applyToday" class="btnlink" type="button">Ustaw dzisiejszą część</button>
+    <button id="startBtn" class="bigbtn primary" type="button">Start</button>
+  </div>
 
+  <div id="startPanel" class="panel">
+    <div class="row" style="margin-top:8px">
+      <div class="chips" id="chips">
+        <div class="chip" data-part="radosne">Tajemnice radosne (pon/sob)</div>
+        <div class="chip" data-part="bolesne">Tajemnice bolesne (wt/pt)</div>
+        <div class="chip" data-part="swiatla">Tajemnice światła (czw)</div>
+        <div class="chip" data-part="chwalebne">Tajemnice chwalebne (śr/nd)</div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
+      <button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
+    </div>
+  </div>
 
-<div id="startPanel" class="panel">
-<div class="row" style="margin-top:8px">
-<div class="chips" id="chips">
-<div class="chip" data-part="radosne">Tajemnice radosne (pon/sob)</div>
-<div class="chip" data-part="bolesne">Tajemnice bolesne (wt/pt)</div>
-<div class="chip" data-part="swiatla">Tajemnice światła (czw)</div>
-<div class="chip" data-part="chwalebne">Tajemnice chwalebne (śr/nd)</div>
-</div>
-</div>
-<div class="row" style="margin-top:10px">
-<button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
-<button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
-</div>
-</div>
+  <div id="readPanel" class="panel hide">
+    <div class="progress"><div id="bar"></div></div>
+    <div class="content">
+      <h3 id="stepTitle" style="margin:0 0 6px;font-size:18px">Tytuł</h3>
+      <div id="stepBody" class="muted"></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="prevBtn" class="bigbtn" type="button">⟵ Wstecz</button>
+      <button id="nextBtn" class="bigbtn primary" type="button">Dalej ⟶</button>
+      <button id="finishBtn" class="bigbtn hide" type="button">Zakończ część</button>
+    </div>
+  </div>
+
+  <footer>
+    <div>Różaniec — cztery części. ✝️ © 2025</div>
+    <a href="https://drogawiary.github.io/" rel="noopener">drogawiary@wp.pl</a>
+    <span class="fmuted">„Odmawiajcie codziennie różaniec.”</span>
+  </footer>
 
 
 </div>
