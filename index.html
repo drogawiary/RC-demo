@@ -252,6 +252,17 @@ Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za ręk�
       if(bar) bar.style.width='0%';
       return;
     }
+
+  if(promisesMode){
+    stepTitle.textContent = 'Obietnice Maryi';
+    stepBody.innerHTML = `tu będzie tekst obietnic`;
+
+    nextBtn.classList.add('hide');
+    finishBtn.classList.add('hide');
+    if(bar) bar.style.width = '0%';
+    return;
+  }
+    
     if(endMode){
       stepTitle.textContent='Dziękczynienie';
       stepBody.innerHTML=`
@@ -293,17 +304,6 @@ Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczyni�
       if(bar) bar.style.width='100%';
       return;
     }
-
-  if(promisesMode){
-    stepTitle.textContent = 'Obietnice Maryi';
-    stepBody.innerHTML = `tu będzie tekst obietnic`;
-
-    nextBtn.classList.add('hide');
-    finishBtn.classList.add('hide');
-    if(bar) bar.style.width = '0%';
-    return;
-  }
-
     
     let d=CONTENT[currentPart];
     if(!d){ currentPart='radosne'; d=CONTENT[currentPart]; }
@@ -331,16 +331,18 @@ Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczyni�
   chips.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); });
   chips.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ const c=e.target.closest('.chip'); if(!c) return; currentPart=c.dataset.part; rememberPart(currentPart); step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart); setActiveChip(); e.preventDefault(); }});
 
-  applyToday.addEventListener('click',()=>{
-    const t = todays();
-    currentPart = t.part;
-    rememberPart(currentPart);
-    step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-    setActiveChip();
-    introMode = false;
-    endMode = false;
-    showStart();
-  });
+applyToday.addEventListener('click',()=>{
+  const t = todays();
+  currentPart = t.part;
+  rememberPart(currentPart);
+  step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
+  setActiveChip();
+  introMode = false;
+  promisesMode = false;  // ⬅️ DODAJ TO
+  endMode = false;
+  showStart();
+});
+
 
 startBtn.addEventListener('click',()=>{
   introMode=false;
@@ -393,21 +395,6 @@ promisesBtn.addEventListener('click',()=>{
   renderStep();
 });
 // 🔵 🔵 🔵 KONIEC WSTAWKI 🔵 🔵 🔵
-
-
-endBtn.addEventListener('click',()=>{
-  endMode=true;
-  introMode=false;
-  promisesMode=false;
-
-  endBtn.classList.add('active');
-  introBtn.classList.remove('active');
-  promisesBtn.classList.remove('active');
-
-  showRead();
-  renderStep();
-  
-});
 endBtn.addEventListener('click',()=>{
   endMode=true;
   introMode=false;
