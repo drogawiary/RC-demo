@@ -59,9 +59,11 @@ blockquote{margin:0 0 8px;padding:8px 12px;border-left:3px solid var(--accent-2)
       </div>
     </div>
     <div class="row" style="margin-top:10px">
-      <button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
-      <button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
-    </div>
+  <button id="introBtn" class="bigbtn" type="button">Wprowadzenie</button>
+  <button id="promisesBtn" class="bigbtn" type="button">Obietnice Maryi</button>
+  <button id="endBtn" class="bigbtn" type="button">Dziękczynienie</button>
+</div>
+
   </div>
 
   <div id="readPanel" class="panel hide">
@@ -153,6 +155,7 @@ blockquote{margin:0 0 8px;padding:8px 12px;border-left:3px solid var(--accent-2)
   const chips=qs('#chips');
   const applyToday=qs('#applyToday');
   const introBtn=qs('#introBtn');
+  const promisesBtn=qs('#promisesBtn');
   const endBtn=qs('#endBtn');
   const startBtn=qs('#startBtn');
   const startPanel=qs('#startPanel');
@@ -165,10 +168,12 @@ blockquote{margin:0 0 8px;padding:8px 12px;border-left:3px solid var(--accent-2)
   const finishBtn=qs('#finishBtn');
 
   // ===== Stan =====
-  let currentPart=null; // nazwa części
-  let step=0;           // indeks kroku 0..6
-  let introMode=false;  // tryb Wprowadzenie
-  let endMode=false;    // tryb Dziękczynienie
+let currentPart=null;  // nazwa części
+let step=0;            // indeks kroku 0..6
+let introMode=false;   // tryb Wprowadzenie
+let promisesMode=false; // tryb Obietnice Maryi
+let endMode=false;     // tryb Dziękczynienie
+
 
   // ===== Dzienna pamięć =====
   resetIfNewDay();
@@ -176,7 +181,13 @@ blockquote{margin:0 0 8px;padding:8px 12px;border-left:3px solid var(--accent-2)
 
   // ===== Render =====
   function totalSteps(){return 7}
-  function showStart(){startPanel.classList.remove('hide');readPanel.classList.add('hide');introBtn.classList.remove('active');endBtn.classList.remove('active');}
+function showStart(){
+  startPanel.classList.remove('hide');
+  readPanel.classList.add('hide');
+  introBtn.classList.remove('active');
+  promisesBtn.classList.remove('active');
+  endBtn.classList.remove('active');
+}
   function showRead(){readPanel.classList.remove('hide');startPanel.classList.add('hide')}
 
   function renderStep(){
@@ -282,6 +293,18 @@ Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczyni�
       if(bar) bar.style.width='100%';
       return;
     }
+
+  if(promisesMode){
+    stepTitle.textContent = 'Obietnice Maryi';
+    stepBody.innerHTML = `tu będzie tekst obietnic`;
+
+    nextBtn.classList.add('hide');
+    finishBtn.classList.add('hide');
+    if(bar) bar.style.width = '0%';
+    return;
+  }
+
+    
     let d=CONTENT[currentPart];
     if(!d){ currentPart='radosne'; d=CONTENT[currentPart]; }
 
@@ -319,19 +342,105 @@ Nie musisz być święty, żeby się modlić – ale modlitwa może cię uczyni�
     showStart();
   });
 
-  startBtn.addEventListener('click',()=>{
-    introMode=false; endMode=false; introBtn.classList.remove('active'); endBtn.classList.remove('active');
-    if(!currentPart){ const last=localStorage.getItem(S.lastPart); if(last && PARTS.includes(last)) currentPart=last; else currentPart=todays().part; }
-    step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
-    rememberPart(currentPart);
-    showRead();
-    renderStep();
-  });
+startBtn.addEventListener('click',()=>{
+  introMode=false;
+  promisesMode=false;
+  endMode=false;
 
-  introBtn.addEventListener('click',()=>{ introMode=true; endMode=false; introBtn.classList.add('active'); endBtn.classList.remove('active'); showRead(); renderStep(); });
-  endBtn.addEventListener('click',()=>{ endMode=true; introMode=false; endBtn.classList.add('active'); introBtn.classList.remove('active'); showRead(); renderStep(); });
+  introBtn.classList.remove('active');
+  promisesBtn.classList.remove('active');
+  endBtn.classList.remove('active');
 
-  prevBtn.addEventListener('click',()=>{ if(introMode||endMode){ introMode=false; endMode=false; showStart(); return; } if(step===0){ showStart(); return; } step=Math.max(0,step-1); renderStep(); });
+  if(!currentPart){
+    const last=localStorage.getItem(S.lastPart);
+    if(last && PARTS.includes(last)) currentPart=last;
+    else currentPart=todays().part;
+  }
+
+  step = isDone(currentPart) ? totalSteps()-1 : savedStep(currentPart);
+  rememberPart(currentPart);
+
+  showRead();
+  renderStep();
+});
+
+
+introBtn.addEventListener('click',()=>{
+  introMode=true;
+  promisesMode=false;
+  endMode=false;
+
+  introBtn.classList.add('active');
+  promisesBtn.classList.remove('active');
+  endBtn.classList.remove('active');
+
+  showRead();
+  renderStep();
+});
+
+
+// 🔵 🔵 🔵 TU WKLEJASZ TEN NOWY KAWAŁEK 🔵 🔵 🔵
+promisesBtn.addEventListener('click',()=>{
+  promisesMode=true;
+  introMode=false;
+  endMode=false;
+
+  promisesBtn.classList.add('active');
+  introBtn.classList.remove('active');
+  endBtn.classList.remove('active');
+
+  showRead();
+  renderStep();
+});
+// 🔵 🔵 🔵 KONIEC WSTAWKI 🔵 🔵 🔵
+
+
+endBtn.addEventListener('click',()=>{
+  endMode=true;
+  introMode=false;
+  promisesMode=false;
+
+  endBtn.classList.add('active');
+  introBtn.classList.remove('active');
+  promisesBtn.classList.remove('active');
+
+  showRead();
+  renderStep();
+  
+});
+endBtn.addEventListener('click',()=>{
+  endMode=true;
+  introMode=false;
+  promisesMode=false;
+
+  endBtn.classList.add('active');
+  introBtn.classList.remove('active');
+  promisesBtn.classList.remove('active');
+
+  showRead();
+  renderStep();
+});
+
+prevBtn.addEventListener('click',()=>{
+
+  // powrót z każdego trybu specjalnego
+  if(introMode || promisesMode || endMode){
+    introMode=false;
+    promisesMode=false;
+    endMode=false;
+    showStart();
+    return;
+  }
+
+  // klasyczne cofnięcie
+  if(step===0){
+    showStart();
+    return;
+  }
+
+  step = Math.max(0, step-1);
+  renderStep();
+});
   nextBtn.addEventListener('click',()=>{ step=Math.min(totalSteps()-1,step+1); renderStep(); });
   finishBtn.addEventListener('click',()=>{ setDone(currentPart,true); step=totalSteps()-1; saveStep(currentPart, step); rememberPart(currentPart); showStart(); setActiveChip(); });
 
