@@ -253,15 +253,98 @@ Gdy zaczynasz go pić, zaczynasz rosnąć duchowo, a Maryja bierze cię za ręk�
       return;
     }
 
-  if(promisesMode){
-    stepTitle.textContent = 'Obietnice Maryi';
-    stepBody.innerHTML = `tu będzie tekst obietnic`;
+if (promisesMode) {
+  stepTitle.textContent = 'Obietnice Maryi';
+  stepBody.innerHTML = `
+<p><strong>Obietnice Maryi dla wytrwałych w różańcu</strong></p>
 
-    nextBtn.classList.add('hide');
-    finishBtn.classList.add('hide');
-    if(bar) bar.style.width = '0%';
-    return;
-  }
+<p>Z modlitwy Kościoła, z przekazów objawień oraz świadectw świętych i zwykłych ludzi
+wyłania się pewna, cicha obietnica Maryi:
+<strong>wytrwały różaniec przynosi wielkie łaski</strong>.</p>
+
+<ul>
+  <li><strong>Szczególna opieka</strong> – w życiu i przy śmierci.</li>
+  <li><strong>Nawrócenie największych grzeszników</strong> – wytrwała modlitwa kruszy najtwardsze serca.</li>
+  <li><strong>Ochrona przed pokusami i złem</strong> – każde „Zdrowaś” jest ciosem w szatana i tarczą dla duszy.</li>
+  <li><strong>Pokój w rodzinach</strong> – wspólna modlitwa zbliża serca i uczy przebaczenia.</li>
+  <li><strong>Uzdrowienia duszy i ciała</strong> – niezliczone świadectwa z sanktuariów, takich jak Lourdes, Fatima, Gietrzwałd.</li>
+  <li><strong>Wysłuchanie próśb</strong> – zgodnie z wolą Bożą i dla zbawienia duszy.</li>
+  <li><strong>Pomoc w trudnościach</strong> – „Odmawiajcie różaniec, a otrzymacie łaski potrzebne w życiu.”</li>
+  <li><strong>Przygotowanie na trudne czasy</strong> – kto trzyma się różańca, nie zginie.</li>
+</ul>
+
+<blockquote>
+  <p><strong>„Ja was nie opuszczę. Wasza Matka.”</strong></p>
+  <p><strong>„Różaniec odmawiany z wiarą i pobożnością jest wielkim ratunkiem dla dusz
+  i środkiem do zwycięstwa nad szatanem.”</strong></p>
+  <p><strong>„Jedno Zdrowaś Maryjo świadomie i uważnie odmówione ma większą wartość
+  niż setki mechanicznie wypowiedzianych słów.”</strong><br>
+  — św. Ludwik Maria Grignion de Montfort</p>
+  <p><strong>„Różaniec to modlitwa tych, którzy kochają, ale nie wiedzą, jak mówić.”</strong><br>
+  — św. Jan Paweł II</p>
+  <p><strong>„Różaniec to łańcuch, który łączy nas z Bogiem.”</strong><br>
+  — św. Teresa z Lisieux</p>
+  <p><strong>„Jeśli chcesz nawrócić grzesznika, odmów za niego różaniec.”</strong><br>
+  — św. Jan Maria Vianney</p>
+  <p><strong>„Gdy mówisz różaniec, Maryja jest tuż obok ciebie.”</strong><br>
+  — św. Alfons Maria Liguori</p>
+</blockquote>
+
+<hr style="margin:10px 0;opacity:0.5;">
+
+<p><strong>🌹 Nowenna Pompejańska — „Modlitwa nie do odparcia”</strong><br>
+Bartolo Longo, 1879 r.</p>
+
+<p>To 54 dni modlitwy bez przerwy: trzy nowenny błagalne i trzy dziękczynne.
+Świadectwa mówią o szczególnych łaskach:</p>
+
+<ul>
+  <li>uzdrowienia z chorób uznanych za nieuleczalne,</li>
+  <li>uratowanie małżeństw i rodzin,</li>
+  <li>uwolnienie od nałogów,</li>
+  <li>łaska wiary dla osób niewierzących,</li>
+  <li>pokój serca w sytuacjach bez wyjścia.</li>
+</ul>
+
+<p>Wielu nazywa ją <strong>„modlitwą nie do odparcia”</strong> – Maryja odpowiada na nią w sposób szczególnie hojny.</p>
+
+<hr style="margin:10px 0;opacity:0.5;">
+
+<p><strong>🌹 15 obietnic różańcowych — „Różaniec będzie ocaleniem świata.”</strong></p>
+
+<p>Tradycja Kościoła przypomina, że bł. Alan de la Roche (XV w.) odnowił praktykę różańca
+i przekazał 15 obietnic dla tych, którzy wiernie go odmawiają.</p>
+
+<p><em>„Te obietnice nie są kontraktem. To odpowiedź Miłości na modlitwę serca.”</em></p>
+
+<ol>
+  <li>Tym, którzy wiernie będą odmawiać mój Różaniec, obiecuję szczególną opiekę i wielkie łaski.</li>
+  <li>Otrzymają szczególną ochronę oraz potężnych orędowników w niebie.</li>
+  <li>Różaniec będzie potężną bronią przeciw piekłu; zniszczy grzech, umniejszy winę i zwycięży herezje.</li>
+  <li>Spowoduje rozkwit cnót i dobrych uczynków; wyprosi wiele miłosierdzia dla dusz.</li>
+  <li>Dusza, która poleca się mnie przez Różaniec, nie zginie.</li>
+  <li>Wierny różańcowi nie zostanie pokonany przez nieszczęścia.</li>
+  <li>Sprawiedliwy wytrwa w łasce, a grzesznik – nawróci się.</li>
+  <li>Miłujący Różaniec otrzymają w życiu i przy śmierci światło Boże i pełnię łaski.</li>
+  <li>Wybawię z czyśćca tych, którzy odmawiali mój Różaniec z miłością.</li>
+  <li>Wierni tej modlitwie osiągną wysoki stopień chwały w niebie.</li>
+  <li>Otrzymacie wszystko, o co prosicie przez Różaniec, jeśli jest to zgodne z wolą mojego Syna.</li>
+  <li>Szerzącym mój Różaniec pomogę we wszystkich potrzebach.</li>
+  <li>Wpiszę odmawiających Różaniec w moje Niepokalane Serce.</li>
+  <li>Odmawiający Różaniec są moimi umiłowanymi dziećmi, a ja ich Matką.</li>
+  <li>Różaniec jest znakiem zbawienia: kto go nosi i modli się z wiarą, będzie bezpieczny w godzinie śmierci.</li>
+</ol>
+
+<p class="hint">Te obietnice są zaproszeniem do zaufania.  
+Maryja nie obiecuje łatwego życia, ale to, że <strong>z różańcem nigdy nie będziesz sam</strong>.</p>
+`;
+
+  nextBtn.classList.add('hide');
+  finishBtn.classList.add('hide');
+  if (bar) bar.style.width = '0%';
+  return;
+}
+
     
     if(endMode){
       stepTitle.textContent='Dziękczynienie';
